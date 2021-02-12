@@ -9,3 +9,9 @@ code {
 svg {
   @apply inline-block;
 }
+
+@layer utilities {
+  .smooth {
+    transition: all 0.3s;
+  }
+}

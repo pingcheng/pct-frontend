@@ -1,5 +1,5 @@
 .nav-item {
-  @apply block text-gray-300 px-3 py-2 rounded-md text-sm font-medium;
+  @apply block text-gray-300 px-3 py-2 rounded-md text-sm font-medium smooth;
 
   &:hover {
     @apply bg-gray-700 text-white;
