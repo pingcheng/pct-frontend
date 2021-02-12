@@ -6,6 +6,10 @@ code {
   @apply font-code;
 }
 
+h1 {
+  @apply text-3xl;
+}
+
 svg {
   @apply inline-block;
 }
