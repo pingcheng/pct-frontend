@@ -1,8 +1,10 @@
-import IndexPage from "./pages/Index/IndexPage";
 import React from "react";
+import loadable from "loadable-components";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import WithNavigationMenu from "./layouts/WithNavigationMenu";
-import AboutPage from "./pages/About/AboutPage";
+
+const IndexPage = loadable(() => import("./pages/Index/IndexPage"));
+const AboutPage = loadable(() => import("./pages/About/AboutPage"));
 
 function App() {
   return (
