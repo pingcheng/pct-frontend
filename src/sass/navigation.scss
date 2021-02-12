@@ -1,0 +1,17 @@
+.nav-item {
+  @apply block text-gray-300 px-3 py-2 rounded-md text-sm font-medium;
+
+  &:hover {
+    @apply bg-gray-700 text-white;
+  }
+
+  &.active {
+    @apply bg-gray-900 text-white;
+  }
+}
+
+@screen md {
+  .nav-item {
+    @apply inline-block;
+  }
+}
