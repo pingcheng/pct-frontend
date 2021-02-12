@@ -5,3 +5,7 @@ body {
 code {
   @apply font-code;
 }
+
+svg {
+  @apply inline-block;
+}

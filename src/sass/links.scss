@@ -1,0 +1,7 @@
+.social-link {
+  @apply cursor-pointer text-gray-400;
+
+  &:hover {
+    @apply text-black;
+  }
+}
