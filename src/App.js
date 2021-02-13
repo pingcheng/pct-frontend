@@ -1,6 +1,7 @@
 import React from "react";
 import loadable from "loadable-components";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { RouteWrapper } from "./layouts/RouteWrapper";
 import WithNavigationMenu from "./layouts/WithNavigationMenu";
 
 const IndexPage = loadable(() => import("./pages/Index/IndexPage"));
@@ -17,21 +18,11 @@ function App() {
       <BrowserRouter>
 
           <Switch>
-
-              <Route exact path="/">
-                  <IndexPage />
-              </Route>
-
-              <WithNavigationMenu>
-                  <Route exact path="/about">
-                      <AboutPage />
-                  </Route>
-
-                  <Route path="/portfolio" exact component={PortfolioListPage} />
-                  <Route path="/portfolio/:slug" component={PortfolioDetailPage} />
-              </WithNavigationMenu>
-
-
+              <Route exact path="/" component={IndexPage} />
+              <RouteWrapper exact path="/about" component={AboutPage} layout={WithNavigationMenu} />
+              <RouteWrapper exact path="/portfolio" component={PortfolioListPage} layout={WithNavigationMenu} />
+              <RouteWrapper path="/portfolio/:slug" component={PortfolioDetailPage} layout={WithNavigationMenu} />
+              <RouteWrapper component={NotFoundPage} layout={WithNavigationMenu} />
           </Switch>
 
       </BrowserRouter>
