@@ -54,7 +54,7 @@ export const Portfolio = [
 			"Requirements analysis and breakdown",
 			"Backend/Frontend developments"
 		],
-		member: [
+		members: [
 			"Ping Cheng - Developer"
 		],
 		screenshots: [

@@ -9,7 +9,7 @@ export default class AboutPage extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="container-body">
 
 				<Heading title="About me" align="center"/>
 

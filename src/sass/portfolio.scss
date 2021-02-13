@@ -16,3 +16,25 @@
     border-bottom-left-radius: 5px;
   }
 }
+
+.portfolio-screenshots {
+
+  column-count: 2;
+  column-gap: 15px;
+  column-fill: auto;
+
+  img {
+    margin-bottom: 15px;
+    @apply rounded w-full smooth;
+
+    &:hover {
+      transform: scale(0.9);
+    }
+  }
+}
+
+@screen md {
+  .portfolio-screenshots {
+    column-count: 3;
+  }
+}
