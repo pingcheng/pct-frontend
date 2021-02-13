@@ -1,0 +1,18 @@
+.portfolio-card {
+  @apply rounded relative smooth bg-cover mb-8 shadow-2xl;
+  width: 300px;
+  height: 400px;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &::after {
+    @apply block absolute bottom-0 w-full;
+    content: " ";
+    height: 100px;
+    background: linear-gradient(transparent,rgba(0,0,0,.5));
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+}

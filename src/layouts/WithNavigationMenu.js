@@ -8,7 +8,7 @@ export default class WithNavigationMenu extends Component {
 			<div>
 				<NavigationMenu />
 
-				<div>
+				<div className="pt-8">
 					{this.props.children}
 				</div>
 			</div>
