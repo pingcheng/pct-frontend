@@ -9,7 +9,7 @@ export default class AboutPage extends Component {
 
 	render() {
 		return (
-			<div className="container-body">
+			<div>
 
 				<Heading title="About me" align="center"/>
 
@@ -94,7 +94,7 @@ export default class AboutPage extends Component {
 							</div>
 						</div>
 
-						<div className="mb-2">
+						<div>
 							<strong>PTEPLUS</strong>
 							<div className="text-gray-400 text-xs">
 								<span className="text-black">Full Stack PHP Developer</span> /  Oct 2016 - Jan 2018<br/>

@@ -7,6 +7,7 @@ const IndexPage = loadable(() => import("./pages/Index/IndexPage"));
 const AboutPage = loadable(() => import("./pages/About/AboutPage"));
 
 const PortfolioListPage = loadable(() => import("./pages/Portfolio/PortfolioListPage"));
+const PortfolioDetailPage = loadable(() => import("./pages/Portfolio/PortfolioDetailPage"));
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
                   </Route>
 
                   <Route path="/portfolio" exact component={PortfolioListPage} />
+                  <Route path="/portfolio/:slug" component={PortfolioDetailPage} />
               </WithNavigationMenu>
 
 

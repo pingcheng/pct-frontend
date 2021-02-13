@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export default class PortfolioListPage extends Component {
 	render() {
 		return (
-			<div className="container-body">
+			<div>
 				<Heading title="Portfolio" align="center"/>
 
 				<div className="flex flex-wrap justify-around mt-4">
