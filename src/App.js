@@ -9,6 +9,8 @@ const AboutPage = loadable(() => import("./pages/About/AboutPage"));
 const PortfolioListPage = loadable(() => import("./pages/Portfolio/PortfolioListPage"));
 const PortfolioDetailPage = loadable(() => import("./pages/Portfolio/PortfolioDetailPage"));
 
+const NotFoundPage = loadable(() => import("./pages/Errors/NotFoundPage"));
+
 function App() {
   return (
     <div className="App">
@@ -21,7 +23,7 @@ function App() {
               </Route>
 
               <WithNavigationMenu>
-                  <Route path="/about">
+                  <Route exact path="/about">
                       <AboutPage />
                   </Route>
 
