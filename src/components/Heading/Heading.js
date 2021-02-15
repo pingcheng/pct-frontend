@@ -8,26 +8,35 @@ export class Heading extends Component {
 
 	static propTypes = {
 		title: PropTypes.string.isRequired,
+		subTitle: PropTypes.string,
 		align: PropTypes.string,
 		level: PropTypes.number,
 		className: PropTypes.string,
 	};
 
 	static defaultProps = {
+		subTitle: null,
 		align: "left",
 		level: 1,
 		className: ""
 	};
 
 	render() {
+
+		let subTitle = "";
+
+		if (this.props.subTitle) {
+			subTitle = <div className="text-sm text-gray-500">{this.props.subTitle}</div>
+		}
+
 		return (
 			<div>
-				<h1
-					className={`mb-8 ${this.props.className}`}
-					style={{
+				<h1 className={`mb-8 ${this.props.className}`} style={{
 						textAlign: this.props.align
-					}}
-				>{ this.props.title }</h1>
+				}}>
+					<div>{ this.props.title }</div>
+					{subTitle}
+				</h1>
 			</div>
 		)
 	}

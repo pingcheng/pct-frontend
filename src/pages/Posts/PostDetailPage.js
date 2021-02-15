@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { PostApi } from "../../api/PostApi/PostApi";
 import { Heading } from "../../components/Heading/Heading";
+import ReactMarkdown from "react-markdown";
 
 export default class PostDetailPage extends Component {
 	constructor(props) {
@@ -20,14 +21,22 @@ export default class PostDetailPage extends Component {
 		PostApi.getPost(this.props.match.params.slug)
 		.then(response => {
 			this.setState({
-				loaded: true,
 				title: response.data.title,
 				content: response.data.content,
 				tags: response.data.tags,
 				timeCreated: response.data.timeCreated
 			})
 		})
-		.catch(() => {})
+		.catch(() => {
+			this.setState({
+				errorOnLoad: true
+			})
+		})
+		.finally(() => {
+			this.setState({
+				loaded: true
+			})
+		})
 	}
 
 	render() {
@@ -41,10 +50,12 @@ export default class PostDetailPage extends Component {
 		} else {
 			content = (
 				<div>
-					<Heading title={this.state.title} />
+					<Heading title={this.state.title} subTitle={`Published on ${this.state.timeCreated}`}/>
 
-					<div className="py-4">
-						{this.state.content}
+					<div className="post-body">
+						<ReactMarkdown>
+							{this.state.content}
+						</ReactMarkdown>
 					</div>
 				</div>
 			);

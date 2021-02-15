@@ -25,3 +25,7 @@ svg {
     max-width: 1200px;
   }
 }
+
+pre {
+  @apply p-4 bg-gray-200 my-4 text-sm;
+}
