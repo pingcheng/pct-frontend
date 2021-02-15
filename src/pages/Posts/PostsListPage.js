@@ -9,6 +9,7 @@ export default class PostsListPage extends Component {
 		super(props);
 
 		this.state = {
+			loaded: false,
 			posts: [],
 			totalPages: 1,
 			currentPage: 1,
@@ -19,7 +20,6 @@ export default class PostsListPage extends Component {
 	componentDidMount() {
 		PostApi.listPosts()
 		.then(response => {
-			console.log(response);
 			this.setState({
 				posts: response.data.data.items,
 				totalPages: response.data.data.totalPages,
@@ -27,18 +27,35 @@ export default class PostsListPage extends Component {
 			});
 		})
 		.catch(error => {
-			console.log("error!", error);
-		});
+
+		})
+		.finally(() => {
+			this.setState({
+				loaded: true
+			})
+		})
 	}
 
 	render() {
+
+		let content;
+
+		if (!this.state.loaded) {
+			content = <div className="text-center">Loading...</div>
+		} else {
+			content = this.state.posts.map((post, index) => (
+				<Link key={index} to={`/posts/${post.slug}`}>
+					<h2 className="social-link text-2xl mb-8">
+						<div>{post.title}</div>
+						<div className="text-sm text-gray-500">Published on {post.timeCreated}</div>
+					</h2>
+				</Link>
+			));
+		}
+
 		return (
 			<div className="container-body">
-				{this.state.posts.map((post, index) => (
-					<Link key={index} to={`/posts/${post.slug}`}>
-						<Heading title={post.title} className="social-link" />
-					</Link>
-				))}
+				{content}
 			</div>
 		)
 	}

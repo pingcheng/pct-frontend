@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { PostApi } from "../../api/PostApi/PostApi";
 import { Heading } from "../../components/Heading/Heading";
 import ReactMarkdown from "react-markdown";
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { atomOneDarkReasonable } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 
 export default class PostDetailPage extends Component {
 	constructor(props) {
@@ -48,14 +50,20 @@ export default class PostDetailPage extends Component {
 		} else if (this.state.errorOnLoad) {
 			content = <div className="text-center">Failed to load</div>;
 		} else {
+
+			const renderers = {
+				code: ({language, value}) => {
+					console.log(language, value);
+					return <SyntaxHighlighter style={atomOneDarkReasonable} language={language}>{value}</SyntaxHighlighter>
+				}
+			};
+
 			content = (
 				<div>
 					<Heading title={this.state.title} subTitle={`Published on ${this.state.timeCreated}`}/>
 
 					<div className="post-body">
-						<ReactMarkdown>
-							{this.state.content}
-						</ReactMarkdown>
+						<ReactMarkdown renderers={renderers} children={this.state.content} />
 					</div>
 				</div>
 			);
