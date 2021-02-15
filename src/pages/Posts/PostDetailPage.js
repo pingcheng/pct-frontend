@@ -4,6 +4,9 @@ import { Heading } from "../../components/Heading/Heading";
 import ReactMarkdown from "react-markdown";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneDarkReasonable } from "react-syntax-highlighter/dist/cjs/styles/hljs";
+import { BsTagFill } from "react-icons/bs";
+import { BiTimeFive } from "react-icons/bi";
+import { DateTime } from "luxon";
 
 export default class PostDetailPage extends Component {
 	constructor(props) {
@@ -15,7 +18,7 @@ export default class PostDetailPage extends Component {
 			title: "",
 			content: false,
 			tags: [],
-			timeCreated: ""
+			timeCreated: DateTime.now()
 		};
 	}
 
@@ -26,7 +29,7 @@ export default class PostDetailPage extends Component {
 				title: response.data.title,
 				content: response.data.content,
 				tags: response.data.tags,
-				timeCreated: response.data.timeCreated
+				timeCreated: DateTime.fromISO(response.data.timeCreated)
 			})
 		})
 		.catch(() => {
@@ -58,9 +61,16 @@ export default class PostDetailPage extends Component {
 				}
 			};
 
+			const subtitle = (
+				<div>
+					<span><BiTimeFive /> {this.state.timeCreated.toISODate()}</span>
+					<span className="pl-4"><BsTagFill /> {this.state.tags.join(", ")}</span>
+				</div>
+			)
+
 			content = (
 				<div>
-					<Heading title={this.state.title} subTitle={`Published on ${this.state.timeCreated}`}/>
+					<Heading title={this.state.title} subTitle={subtitle}/>
 
 					<div className="post-body">
 						<ReactMarkdown renderers={renderers} children={this.state.content} />

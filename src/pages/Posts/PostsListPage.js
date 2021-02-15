@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { PostApi } from "../../api/PostApi/PostApi";
 import { Link } from "react-router-dom";
-import { Heading } from "../../components/Heading/Heading";
+import { DateTime } from "luxon";
 
 export default class PostsListPage extends Component {
 
@@ -43,14 +43,17 @@ export default class PostsListPage extends Component {
 		if (!this.state.loaded) {
 			content = <div className="text-center">Loading...</div>
 		} else {
-			content = this.state.posts.map((post, index) => (
-				<Link key={index} to={`/posts/${post.slug}`}>
-					<h2 className="social-link text-2xl mb-8">
-						<div>{post.title}</div>
-						<div className="text-sm text-gray-500">Published on {post.timeCreated}</div>
-					</h2>
-				</Link>
-			));
+			content = this.state.posts.map((post, index) => {
+				const date = DateTime.fromISO(post.timeCreated);
+				return (
+					<Link key={index} to={`/posts/${post.slug}`}>
+						<h2 className="social-link text-2xl mb-8">
+							<div>{post.title}</div>
+							<div className="text-sm text-gray-500">Published on {date.toISODate()}</div>
+						</h2>
+					</Link>
+				)
+			});
 		}
 
 		return (

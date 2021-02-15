@@ -12,6 +12,7 @@
     "autoprefixer": "^9",
     "axios": "^0.21.1",
     "loadable-components": "^2.2.3",
+    "luxon": "^1.26.0",
     "postcss": "^7",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
