@@ -10,6 +10,9 @@ const AboutPage = loadable(() => import("./pages/About/AboutPage"));
 const PortfolioListPage = loadable(() => import("./pages/Portfolio/PortfolioListPage"));
 const PortfolioDetailPage = loadable(() => import("./pages/Portfolio/PortfolioDetailPage"));
 
+const PostsListPage = loadable(() => import("./pages/Posts/PostsListPage"));
+const PostDetailPage = loadable(() => import("./pages/Posts/PostDetailPage"));
+
 const NotFoundPage = loadable(() => import("./pages/Errors/NotFoundPage"));
 
 function App() {
@@ -20,8 +23,13 @@ function App() {
           <Switch>
               <Route exact path="/" component={IndexPage} />
               <RouteWrapper exact path="/about" component={AboutPage} layout={WithNavigationMenu} />
+
               <RouteWrapper exact path="/portfolio" component={PortfolioListPage} layout={WithNavigationMenu} />
               <RouteWrapper path="/portfolio/:slug" component={PortfolioDetailPage} layout={WithNavigationMenu} />
+
+              <RouteWrapper exact path="/posts" component={PostsListPage} layout={WithNavigationMenu} />
+              <RouteWrapper path="/posts/:slug" component={PostDetailPage} layout={WithNavigationMenu} />
+
               <RouteWrapper component={NotFoundPage} layout={WithNavigationMenu} />
           </Switch>
 
