@@ -135,7 +135,7 @@ export default class PostsListPage extends Component {
 				return (
 					<div className="mb-10" key={index}>
 						<Link to={link}>
-							<h2 className="text-4xl mb-4">
+							<h2 className="text-2xl mb-4 md:text-4xl">
 								<div className="font-bold">{post.title}</div>
 								<div className="text-sm text-gray-500 pt-2">Published on {date.toISODate()}</div>
 							</h2>
