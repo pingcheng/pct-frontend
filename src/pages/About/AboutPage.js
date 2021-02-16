@@ -25,7 +25,7 @@ export default class AboutPage extends Component {
 					</SimpleRowData>
 
 					<SimpleRowData label="linkedin">
-						<a href="https://www.linkedin.com/in/ping-cheng-5a47b484/">https://www.linkedin.com/in/ping-cheng-5a47b484/</a>
+						<a className="break-all" href="https://www.linkedin.com/in/ping-cheng-5a47b484/">https://www.linkedin.com/in/ping-cheng-5a47b484/</a>
 					</SimpleRowData>
 
 					<SimpleRowData label="email">
@@ -33,7 +33,7 @@ export default class AboutPage extends Component {
 					</SimpleRowData>
 
 					<SimpleRowData label="stack about this site">
-						<a href="https://stackshare.io/pingcheng/pct" target="_blank" rel="noreferrer">https://stackshare.io/pingcheng/pct</a>
+						<a className="break-all" href="https://stackshare.io/pingcheng/pct" target="_blank" rel="noreferrer">https://stackshare.io/pingcheng/pct</a>
 					</SimpleRowData>
 
 					<SimpleRowData label="location">Melbourne, Australia</SimpleRowData>

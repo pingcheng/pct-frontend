@@ -11,7 +11,10 @@ export class SimpleRowData extends Component {
 		return (
 			<div className="flex mb-4">
 				<div
-					className="text-gray-400 text-xs w-1/3 text-right pr-2"
+					className="text-gray-400 w-1/3 text-right pr-2"
+					style={{
+						minWidth: "33.33333%"
+					}}
 				>{ this.props.label.trim().toUpperCase() }</div>
 
 				<div
