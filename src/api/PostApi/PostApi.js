@@ -8,7 +8,11 @@ export class PostApi {
 		let response;
 
 		try {
-			response = await ApiClient.get("/posts");
+			response = await ApiClient.get("/posts", {
+				params: {
+					page: page
+				}
+			});
 		} catch (e) {
 			throw e;
 		}
