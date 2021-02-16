@@ -137,7 +137,7 @@ export default class PostsListPage extends Component {
 						<Link to={link}>
 							<h2 className="text-4xl mb-4">
 								<div className="font-bold">{post.title}</div>
-								<div className="text-sm text-gray-500">Published on {date.toISODate()}</div>
+								<div className="text-sm text-gray-500 pt-2">Published on {date.toISODate()}</div>
 							</h2>
 						</Link>
 
@@ -163,7 +163,7 @@ export default class PostsListPage extends Component {
 				<Heading title="Posts" align="center"/>
 
 				<div className="flex flex-wrap">
-					<div className="flex-1">
+					<div className="flex-1 w-full">
 						{content}
 					</div>
 				</div>
