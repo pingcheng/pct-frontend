@@ -7,6 +7,7 @@ import { atomOneDarkReasonable } from "react-syntax-highlighter/dist/cjs/styles/
 import ReactMarkdown from "react-markdown";
 import { Heading } from "../../components/Heading/Heading";
 import { BiTimeFive } from "react-icons/bi";
+import { integerOrNull } from "../../utils/NumberUtils";
 
 export default class PostsListPage extends Component {
 
@@ -63,28 +64,10 @@ export default class PostsListPage extends Component {
 	readUrlQueries(next) {
 		const query = new URLSearchParams(this.props.location.search);
 		const updates = {};
-		const page = query.get("page");
 
-		if (page !== null && Number.isInteger(parseInt((page)))) {
-			updates.queryPage = parseInt(page);
-		} else {
-			updates.queryPage = 1;
-		}
-
-		const categoryId = query.get("categoryId");
-		if (categoryId !== null && Number.isInteger(parseInt(categoryId))) {
-			updates.queryCategoryId = parseInt(categoryId);
-		} else {
-			updates.queryCategoryId = null;
-		}
-
-		// Read tag from query search.
-		const tag = query.get("tag");
-		if (tag !== null) {
-			updates.queryTag = tag;
-		} else {
-			updates.queryTag = null;
-		}
+		updates.page = integerOrNull(query.get("page")) || 1;
+		updates.queryCategoryId = integerOrNull(query.get("categoryId"));
+		updates.queryTag = query.get("tag");
 
 		this.setState(updates, next);
 	}
