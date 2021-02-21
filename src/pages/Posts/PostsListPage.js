@@ -7,6 +7,7 @@ import { atomOneDarkReasonable } from "react-syntax-highlighter/dist/cjs/styles/
 import ReactMarkdown from "react-markdown";
 import { Heading } from "../../components/Heading/Heading";
 import { BiTimeFive } from "react-icons/bi";
+import { IoIosRemoveCircleOutline } from "react-icons/all";
 
 export default class PostsListPage extends Component {
 
@@ -252,15 +253,25 @@ export default class PostsListPage extends Component {
 		});
 	}
 
+	removeUrlQuery = (name) => {
+		const query = new URLSearchParams(this.props.location.search);
+		query.delete(name);
+		this.props.history.push({
+			pathname: this.props.location.pathname,
+			search: query.toString()
+		});
+	}
+
 	render() {
 
-		let content;
 		const renderers = {
 			code: ({language, value}) => {
 				return <SyntaxHighlighter style={atomOneDarkReasonable} language={language}>{value}</SyntaxHighlighter>
 			}
 		};
 
+		// Compose post html
+		let content;
 		if (!this.state.postLoaded) {
 			content = <div className="text-center">Loading...</div>
 		} else if (this.state.errorOnPostLoad) {
@@ -329,9 +340,42 @@ export default class PostsListPage extends Component {
 			})
 		}
 
+		let filterHtml = [];
+		if (this.state.queryCategoryId !== null && this.state.postCategoriesLoaded) {
+			let categoryName = "Unknown";
+			for (let category of this.state.postCategories) {
+				if (category.id === this.state.queryCategoryId) {
+					categoryName = category.name;
+					break;
+				}
+			}
+
+			filterHtml.push((
+				<div
+					onClick={() => this.removeUrlQuery('categoryId')}
+					className="inline-block px-2 py-1 rounded-lg bg-gray-200 text-xs hover:text-black cursor-pointer hover:bg-gray-300 smooth mr-2"
+				>
+					✕ Category - {categoryName}
+				</div>
+			));
+		}
+
+		if (this.state.queryTag !== null && this.state.postTagsLoaded) {
+			filterHtml.push((
+				<div
+					onClick={() => this.removeUrlQuery('tag')}
+					className="inline-block px-2 py-1 rounded-lg bg-gray-200 text-xs hover:text-black cursor-pointer hover:bg-gray-300 smooth mr-2"
+				>
+					✕ Tag - {this.state.queryTag}
+				</div>
+			));
+		}
+
 		return (
 			<div className="container-body">
-				<Heading title="Posts" align="center"/>
+				<div>
+					<Heading title="Posts" align="center" subTitle={filterHtml}/>
+				</div>
 
 				<div className="flex flex-wrap">
 					<div className="w-full md:w-3/4">
