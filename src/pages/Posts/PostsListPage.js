@@ -95,7 +95,8 @@ export default class PostsListPage extends Component {
 			errorOnPostLoaded: false
 		}, () => {
 			PostApi.listPosts(this.state.queryPage, {
-				categoryId: this.state.queryCategoryId
+				categoryId: this.state.queryCategoryId,
+				tag: this.state.queryTag
 			})
 				.then(response => {
 					this.setState({
@@ -231,6 +232,22 @@ export default class PostsListPage extends Component {
 		});
 	};
 
+	/**
+	 * Change the post tag.
+	 *
+	 * @param tag
+	 * @returns {Promise<void>}
+	 */
+	changeTag = async (tag) => {
+		const query = new URLSearchParams(this.props.location.search);
+		query.set("tag", tag);
+		query.delete("page");
+		await this.props.history.push({
+			pathname: this.props.location.pathname,
+			search: query.toString()
+		});
+	}
+
 	render() {
 
 		let content;
@@ -299,6 +316,7 @@ export default class PostsListPage extends Component {
 		} else {
 			postTagsHtml = this.state.postTags.map((tag, index) => {
 				return <div
+					onClick={() => this.changeTag(tag)}
 					key={index}
 					className="text-gray-700 hover:text-black smooth cursor-pointer mr-2 inline-block"
 				>{tag}</div>

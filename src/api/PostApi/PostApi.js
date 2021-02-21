@@ -12,6 +12,7 @@ export class PostApi {
 				params: {
 					page: page,
 					categoryId: options.categoryId || null,
+					tag: options.tag || null,
 				}
 			});
 		} catch (e) {
