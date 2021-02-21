@@ -65,7 +65,7 @@ export default class PostsListPage extends Component {
 		const query = new URLSearchParams(this.props.location.search);
 		const updates = {};
 
-		updates.page = integerOrNull(query.get("page")) || 1;
+		updates.queryPage = integerOrNull(query.get("page")) || 1;
 		updates.queryCategoryId = integerOrNull(query.get("categoryId"));
 		updates.queryTag = query.get("tag");
 
