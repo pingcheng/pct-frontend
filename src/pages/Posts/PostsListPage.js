@@ -308,7 +308,7 @@ export default class PostsListPage extends Component {
 				return <div
 					onClick={() => this.changeCategory(category.id)}
 					key={index}
-					className="text-gray-700 hover:text-black smooth cursor-pointer"
+					className="text-gray-500 hover:text-black smooth cursor-pointer"
 				>{category.name}</div>
 			});
 		}
@@ -324,7 +324,7 @@ export default class PostsListPage extends Component {
 				return <div
 					onClick={() => this.changeTag(tag)}
 					key={index}
-					className="text-gray-700 hover:text-black smooth cursor-pointer mr-2 inline-block"
+					className="text-gray-500 hover:text-black smooth cursor-pointer mr-2 inline-block"
 				>{tag}</div>
 			})
 		}
@@ -342,14 +342,14 @@ export default class PostsListPage extends Component {
 
 					<div className="w-full md:w-1/4">
 						<div className="bg-gray-200 rounded-md p-4 mb-4">
-							<div className="text-lg mb-4">Post Category</div>
+							<div className="text-lg mb-4">Category</div>
 							<div className="text-sm">
 								{postCategoriesHtml}
 							</div>
 						</div>
 
 						<div className="bg-gray-200 rounded-md p-4">
-							<div className="text-lg mb-4">Post Tags</div>
+							<div className="text-lg mb-4">Tags</div>
 							<div className="text-sm w-full">
 								{postTagsHtml}
 							</div>
