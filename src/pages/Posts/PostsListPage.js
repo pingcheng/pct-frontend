@@ -6,6 +6,7 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { atomOneDarkReasonable } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import ReactMarkdown from "react-markdown";
 import { Heading } from "../../components/Heading/Heading";
+import { BiTimeFive } from "react-icons/bi";
 
 export default class PostsListPage extends Component {
 
@@ -135,9 +136,9 @@ export default class PostsListPage extends Component {
 				return (
 					<div className="mb-10" key={index}>
 						<Link to={link}>
-							<h2 className="text-2xl mb-4 md:text-4xl">
+							<h2 className="text-2xl mb-4 md:text-3xl">
 								<div className="font-bold">{post.title}</div>
-								<div className="text-sm text-gray-500 pt-2">Published on {date.toISODate()}</div>
+								<div className="text-sm text-gray-500"><BiTimeFive /> {date.toISODate()}</div>
 							</h2>
 						</Link>
 

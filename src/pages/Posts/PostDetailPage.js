@@ -69,7 +69,7 @@ export default class PostDetailPage extends Component {
 
 			content = (
 				<div>
-					<Heading title={this.state.title} subTitle={subtitle}/>
+					<Heading title={this.state.title} subTitle={subtitle} className="text-2xl md:text-3xl" />
 
 					<div className="post-body">
 						<ReactMarkdown renderers={renderers} children={this.state.content} />
