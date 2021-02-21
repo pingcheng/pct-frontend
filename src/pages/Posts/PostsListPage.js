@@ -335,7 +335,7 @@ export default class PostsListPage extends Component {
 			filterHtml.push((
 				<div
 					onClick={() => this.removeUrlQuery('categoryId')}
-					className="inline-block px-2 py-1 rounded-lg bg-gray-200 text-xs hover:text-black cursor-pointer hover:bg-gray-300 smooth mr-2"
+					className="inline-block px-2 py-1 rounded-lg bg-gray-100 text-xs hover:text-black cursor-pointer hover:bg-gray-300 smooth mr-2"
 				>
 					✕ Category - {categoryName}
 				</div>
@@ -346,7 +346,7 @@ export default class PostsListPage extends Component {
 			filterHtml.push((
 				<div
 					onClick={() => this.removeUrlQuery('tag')}
-					className="inline-block px-2 py-1 rounded-lg bg-gray-200 text-xs hover:text-black cursor-pointer hover:bg-gray-300 smooth mr-2"
+					className="inline-block px-2 py-1 rounded-lg bg-gray-100 text-xs hover:text-black cursor-pointer hover:bg-gray-300 smooth mr-2"
 				>
 					✕ Tag - {this.state.queryTag}
 				</div>
@@ -367,14 +367,14 @@ export default class PostsListPage extends Component {
 					</div>
 
 					<div className="w-full md:w-1/4">
-						<div className="bg-gray-200 rounded-md p-4 mb-4">
+						<div className="bg-gray-100 rounded-md p-4 mb-4">
 							<div className="text-lg mb-4">Category</div>
 							<div className="text-sm">
 								{postCategoriesHtml}
 							</div>
 						</div>
 
-						<div className="bg-gray-200 rounded-md p-4">
+						<div className="bg-gray-100 rounded-md p-4">
 							<div className="text-lg mb-4">Tags</div>
 							<div className="text-sm w-full">
 								{postTagsHtml}
