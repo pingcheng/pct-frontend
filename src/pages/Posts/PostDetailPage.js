@@ -86,8 +86,8 @@ export default class PostDetailPage extends Component {
 					shortname="pingchengtech"
 					config={
 						{
-							url: window.location.origin,
-							identifier: this.props.location.pathname,
+							url: `${window.location.origin}/${this.props.location.pathname}`,
+							identifier: `post/${this.props.match.params.slug}`,
 							title: this.state.title
 						}
 					}
