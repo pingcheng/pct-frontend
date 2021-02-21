@@ -7,7 +7,6 @@ import { atomOneDarkReasonable } from "react-syntax-highlighter/dist/cjs/styles/
 import ReactMarkdown from "react-markdown";
 import { Heading } from "../../components/Heading/Heading";
 import { BiTimeFive } from "react-icons/bi";
-import { IoIosRemoveCircleOutline } from "react-icons/all";
 
 export default class PostsListPage extends Component {
 
