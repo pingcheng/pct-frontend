@@ -73,27 +73,27 @@ export default class PostsListPage extends Component {
 		this.setState({
 			postLoaded: false,
 			errorOnPostLoaded: false
-		});
-
-		PostApi.listPosts(this.state.queryPage, {
-			categoryId: this.state.queryCategoryId
-		})
-		.then(response => {
-			this.setState({
-				posts: response.data.data.items,
-				totalPages: response.data.data.totalPages,
-				currentPage: response.data.data.currentPage,
-			});
-		})
-		.catch(error => {
-			this.setState({
-				errorOnPostLoad: true,
+		}, () => {
+			PostApi.listPosts(this.state.queryPage, {
+				categoryId: this.state.queryCategoryId
 			})
-		})
-		.finally(() => {
-			this.setState({
-				postLoaded: true
-			})
+				.then(response => {
+					this.setState({
+						posts: response.data.data.items,
+						totalPages: response.data.data.totalPages,
+						currentPage: response.data.data.currentPage,
+					});
+				})
+				.catch(error => {
+					this.setState({
+						errorOnPostLoad: true,
+					})
+				})
+				.finally(() => {
+					this.setState({
+						postLoaded: true
+					})
+				});
 		});
 	};
 
