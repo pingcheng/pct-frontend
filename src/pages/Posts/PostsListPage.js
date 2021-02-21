@@ -24,8 +24,14 @@ export default class PostsListPage extends Component {
 			errorOnPostCategoriesLoad: false,
 			postCategories: [],
 
+			// Post Tags states
+			postTagsLoaded: false,
+			errorOnPostTagsLoad: false,
+			postTag: [],
+
 			queryPage: 1,
 			queryCategoryId: null,
+			queryTag: null,
 		}
 	}
 
@@ -38,6 +44,7 @@ export default class PostsListPage extends Component {
 		this.readUrlQueries(() => {
 			this.loadPosts();
 			this.loadPostCategories();
+			this.loadPostTags();
 		});
 	}
 
@@ -67,6 +74,12 @@ export default class PostsListPage extends Component {
 		const categoryId = query.get("categoryId");
 		if (categoryId !== null && Number.isInteger(parseInt(categoryId))) {
 			updates.queryCategoryId = parseInt(categoryId);
+		}
+
+		// Read tag from query search.
+		const tag = query.get("tag");
+		if (tag !== null) {
+			updates.queryTag = tag;
 		}
 
 		this.setState(updates, next);
@@ -137,6 +150,39 @@ export default class PostsListPage extends Component {
 				});
 		});
 	};
+
+	/**
+	 * Load the post tags into the page state.
+	 */
+	loadPostTags = () => {
+
+		// If post tags are already loaded, then we don't need to reload them.
+		if (this.state.postTagsLoaded) {
+			return;
+		}
+
+		this.setState({
+			postTagsLoaded: false,
+			errorOnPostTagsLoad: false,
+		}, () => {
+			PostApi.listPostTags()
+				.then(response => {
+					this.setState({
+						postTags: response.data
+					});
+				})
+				.catch(() => {
+					this.setState({
+						errorOnPostTagsLoad: true,
+					});
+				})
+				.finally(() => {
+					this.setState({
+						postTagsLoaded: true,
+					})
+				});
+		});
+	}
 
 	/**
 	 * Go to the next page.
@@ -244,6 +290,21 @@ export default class PostsListPage extends Component {
 			});
 		}
 
+		// Compose HTML content for post tags
+		let postTagsHtml;
+		if (!this.state.postTagsLoaded) {
+			postTagsHtml = <div>Load post tags...</div>;
+		} else if (this.state.errorOnPostTagsLoad) {
+			postTagsHtml = <div>Failed to load post tags</div>;
+		} else {
+			postTagsHtml = this.state.postTags.map((tag, index) => {
+				return <div
+					key={index}
+					className="text-gray-700 hover:text-black smooth cursor-pointer mr-2 inline-block"
+				>{tag}</div>
+			})
+		}
+
 		return (
 			<div className="container-body">
 				<Heading title="Posts" align="center"/>
@@ -256,10 +317,17 @@ export default class PostsListPage extends Component {
 					</div>
 
 					<div className="w-full md:w-1/4">
-						<div className="bg-gray-200 rounded-md p-4">
+						<div className="bg-gray-200 rounded-md p-4 mb-4">
 							<div className="text-lg mb-4">Post Category</div>
 							<div className="text-sm">
 								{postCategoriesHtml}
+							</div>
+						</div>
+
+						<div className="bg-gray-200 rounded-md p-4">
+							<div className="text-lg mb-4">Post Tags</div>
+							<div className="text-sm w-full">
+								{postTagsHtml}
 							</div>
 						</div>
 					</div>

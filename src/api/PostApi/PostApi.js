@@ -49,4 +49,21 @@ export class PostApi {
 
 		return response.data;
 	}
+
+	/**
+	 * List post tags.
+	 *
+	 * @returns {Promise<any>}
+	 */
+	static async listPostTags() {
+		let response;
+
+		try {
+			response = await ApiClient.get("/postTags");
+		} catch (e) {
+			throw e;
+		}
+
+		return response.data;
+	}
 }
