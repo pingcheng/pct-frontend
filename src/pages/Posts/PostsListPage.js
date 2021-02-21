@@ -41,6 +41,13 @@ export default class PostsListPage extends Component {
 		});
 	}
 
+	componentDidUpdate(prevProps) {
+		// Watch the url search string, "remount" the component when the query string changed.
+		if (prevProps.location.search !== this.props.location.search) {
+			this.componentDidMount();
+		}
+	}
+
 	/**
 	 * Read the query string and put them into state
 	 *
@@ -138,7 +145,6 @@ export default class PostsListPage extends Component {
 				pathname: this.props.location.pathname,
 				search: query.toString()
 			});
-			this.componentDidMount();
 		}
 	};
 
@@ -155,7 +161,6 @@ export default class PostsListPage extends Component {
 				pathname: this.props.location.pathname,
 				search: query.toString()
 			});
-			this.componentDidMount();
 		}
 	};
 
@@ -172,7 +177,6 @@ export default class PostsListPage extends Component {
 			pathname: this.props.location.pathname,
 			search: query.toString()
 		});
-		this.componentDidMount();
 	};
 
 	render() {
