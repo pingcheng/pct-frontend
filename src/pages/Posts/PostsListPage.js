@@ -284,7 +284,7 @@ export default class PostsListPage extends Component {
 			});
 
 			content.push(
-				<div className="flex justify-between" key="paginator">
+				<div className="flex justify-between mb-4" key="paginator">
 					{this.state.currentPage > 1 ? <div onClick={this.previousPage} className="text-blue-500 cursor-pointer">Previous Page</div> : <div> </div>}
 					{this.state.currentPage < this.state.totalPages ? <div onClick={this.nextPage} className="text-blue-500 cursor-pointer">Next Page</div> : <div> </div>}
 				</div>
