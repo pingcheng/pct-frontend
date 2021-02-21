@@ -8,6 +8,7 @@ import ReactMarkdown from "react-markdown";
 import { Heading } from "../../components/Heading/Heading";
 import { BiTimeFive } from "react-icons/bi";
 import { integerOrNull } from "../../utils/NumberUtils";
+import { updateSearchQueries } from "../../utils/UrlUtils";
 
 export default class PostsListPage extends Component {
 
@@ -177,13 +178,13 @@ export default class PostsListPage extends Component {
 	 *
 	 * @returns {Promise<void>}
 	 */
-	nextPage = async () => {
+	nextPage = () => {
 		if (this.state.postLoaded) {
-			const query = new URLSearchParams(this.props.location.search);
-			query.set("page", String(this.state.queryPage + 1));
-			await this.props.history.push({
+			this.props.history.push({
 				pathname: this.props.location.pathname,
-				search: query.toString()
+				search: updateSearchQueries(this.props.location.search, {
+					page: this.state.queryPage + 1
+				}).toString()
 			});
 		}
 	};
@@ -193,13 +194,13 @@ export default class PostsListPage extends Component {
 	 *
 	 * @returns {Promise<void>}
 	 */
-	previousPage = async () => {
+	previousPage = () => {
 		if (this.state.postLoaded) {
-			const query = new URLSearchParams(this.props.location.search);
-			query.set("page", String(this.state.queryPage - 1));
-			await this.props.history.push({
+			this.props.history.push({
 				pathname: this.props.location.pathname,
-				search: query.toString()
+				search: updateSearchQueries(this.props.location.search, {
+					page: this.state.queryPage - 1
+				}).toString()
 			});
 		}
 	};
@@ -209,13 +210,13 @@ export default class PostsListPage extends Component {
 	 *
 	 * @returns {Promise<void>}
 	 */
-	changeCategory = async (categoryId) => {
-		const query = new URLSearchParams(this.props.location.search);
-		query.set("categoryId", categoryId);
-		query.delete("page");
-		await this.props.history.push({
+	changeCategory = (categoryId) => {
+		this.props.history.push({
 			pathname: this.props.location.pathname,
-			search: query.toString()
+			search: updateSearchQueries(this.props.location.search, {
+				categoryId: categoryId,
+				page: null
+			}).toString()
 		});
 	};
 
@@ -225,22 +226,22 @@ export default class PostsListPage extends Component {
 	 * @param tag
 	 * @returns {Promise<void>}
 	 */
-	changeTag = async (tag) => {
-		const query = new URLSearchParams(this.props.location.search);
-		query.set("tag", tag);
-		query.delete("page");
-		await this.props.history.push({
+	changeTag = (tag) => {
+		this.props.history.push({
 			pathname: this.props.location.pathname,
-			search: query.toString()
+			search: updateSearchQueries(this.props.location.search, {
+				tag: tag,
+				page: null
+			}).toString()
 		});
 	}
 
 	removeUrlQuery = (name) => {
-		const query = new URLSearchParams(this.props.location.search);
-		query.delete(name);
 		this.props.history.push({
 			pathname: this.props.location.pathname,
-			search: query.toString()
+			search: updateSearchQueries(this.props.location.search, {
+				[name]: null
+			}).toString()
 		});
 	}
 
