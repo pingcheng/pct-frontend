@@ -207,8 +207,6 @@ export default class PostsListPage extends Component {
 
 	/**
 	 * Change the post category.
-	 *
-	 * @returns {Promise<void>}
 	 */
 	changeCategory = (categoryId) => {
 		this.props.history.push({
@@ -224,7 +222,6 @@ export default class PostsListPage extends Component {
 	 * Change the post tag.
 	 *
 	 * @param tag
-	 * @returns {Promise<void>}
 	 */
 	changeTag = (tag) => {
 		this.props.history.push({
@@ -236,6 +233,11 @@ export default class PostsListPage extends Component {
 		});
 	}
 
+	/**
+	 * Remove a param from url search.
+	 *
+	 * @param name
+	 */
 	removeUrlQuery = (name) => {
 		this.props.history.push({
 			pathname: this.props.location.pathname,
