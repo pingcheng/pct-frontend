@@ -56,7 +56,6 @@ export default class PostDetailPage extends Component {
 
 			const renderers = {
 				code: ({language, value}) => {
-					console.log(language, value);
 					return <SyntaxHighlighter style={atomOneDarkReasonable} language={language}>{value}</SyntaxHighlighter>
 				}
 			};
