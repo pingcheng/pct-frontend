@@ -8,7 +8,10 @@ export class Heading extends Component {
 
 	static propTypes = {
 		title: PropTypes.string.isRequired,
-		subTitle: PropTypes.string,
+		subTitle: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.array,
+		]),
 		align: PropTypes.string,
 		level: PropTypes.number,
 		className: PropTypes.string,
