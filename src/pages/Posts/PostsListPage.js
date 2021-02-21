@@ -108,9 +108,15 @@ export default class PostsListPage extends Component {
 	 * Load the post categories into the page state.
 	 */
 	loadPostCategories = () => {
+
+		// If the category is already loaded, then we don't need to reload them.
+		if (this.state.postCategoriesLoaded) {
+			return;
+		}
+
 		this.setState({
-			postLoaded: false,
-			errorOnPostLoaded: false,
+			postCategoriesLoaded: false,
+			errorOnPostCategoriesLoad: false,
 		}, () => {
 
 			PostApi.listPostCategories()
