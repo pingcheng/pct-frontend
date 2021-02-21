@@ -11,6 +11,7 @@ export class Heading extends Component {
 		subTitle: PropTypes.oneOfType([
 			PropTypes.string,
 			PropTypes.array,
+			PropTypes.object
 		]),
 		align: PropTypes.string,
 		level: PropTypes.number,

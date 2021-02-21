@@ -7,6 +7,7 @@ import { atomOneDarkReasonable } from "react-syntax-highlighter/dist/cjs/styles/
 import { BsTagFill } from "react-icons/bs";
 import { BiTimeFive } from "react-icons/bi";
 import { DateTime } from "luxon";
+import { DiscussionEmbed } from "disqus-react";
 
 export default class PostDetailPage extends Component {
 	constructor(props) {
@@ -78,9 +79,30 @@ export default class PostDetailPage extends Component {
 			);
 		}
 
+		let disqusContent;
+		if (this.state.loaded && !this.state.errorOnLoad) {
+			disqusContent = (
+				<DiscussionEmbed
+					shortname="pingchengtech"
+					config={
+						{
+							url: window.location.origin,
+							identifier: this.props.location.pathname,
+							title: this.state.title
+						}
+					}
+				/>
+			);
+		}
+
 		return (
 			<div className="container-body">
-				{content}
+				<div>
+					{content}
+				</div>
+				<div>
+					{disqusContent}
+				</div>
 			</div>
 		)
 	}
