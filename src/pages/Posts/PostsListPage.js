@@ -74,12 +74,16 @@ export default class PostsListPage extends Component {
 		const categoryId = query.get("categoryId");
 		if (categoryId !== null && Number.isInteger(parseInt(categoryId))) {
 			updates.queryCategoryId = parseInt(categoryId);
+		} else {
+			updates.queryCategoryId = null;
 		}
 
 		// Read tag from query search.
 		const tag = query.get("tag");
 		if (tag !== null) {
 			updates.queryTag = tag;
+		} else {
+			updates.queryTag = null;
 		}
 
 		this.setState(updates, next);
@@ -261,7 +265,7 @@ export default class PostsListPage extends Component {
 			content = <div className="text-center">Loading...</div>
 		} else if (this.state.errorOnPostLoad) {
 			content = <div className="text-center">Failed to load posts</div>
-		} else {
+		} else if (this.state.posts.length > 0) {
 			content = this.state.posts.map((post, index) => {
 				const date = DateTime.fromISO(post.timeCreated);
 				const link = `/posts/${post.slug}`;
@@ -289,6 +293,8 @@ export default class PostsListPage extends Component {
 					{this.state.currentPage < this.state.totalPages ? <div onClick={this.nextPage} className="text-blue-500 cursor-pointer">Next Page</div> : <div> </div>}
 				</div>
 			);
+		} else {
+			content = <div>No posts found :(</div>;
 		}
 
 		// Compose HTML content for post categories
