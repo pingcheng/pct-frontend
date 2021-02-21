@@ -20,7 +20,12 @@ export default class PostsListPage extends Component {
 			totalPages: 1,
 			currentPage: 1,
 
+			postCategoriesLoaded: false,
+			errorOnPostCategoriesLoad: false,
+			postCategories: [],
+
 			queryPage: 1,
+			queryCategoryId: null,
 		}
 	}
 
@@ -30,7 +35,10 @@ export default class PostsListPage extends Component {
 	 * 2. Load posts
 	 */
 	componentDidMount() {
-		this.readUrlQueries(this.loadPosts);
+		this.readUrlQueries(() => {
+			this.loadPosts();
+			this.loadPostCategories();
+		});
 	}
 
 	/**
@@ -49,6 +57,11 @@ export default class PostsListPage extends Component {
 			updates.queryPage = 1;
 		}
 
+		const categoryId = query.get("categoryId");
+		if (categoryId !== null && Number.isInteger(parseInt(categoryId))) {
+			updates.queryCategoryId = parseInt(categoryId);
+		}
+
 		this.setState(updates, next);
 	}
 
@@ -62,7 +75,9 @@ export default class PostsListPage extends Component {
 			errorOnPostLoaded: false
 		});
 
-		PostApi.listPosts(this.state.queryPage)
+		PostApi.listPosts(this.state.queryPage, {
+			categoryId: this.state.queryCategoryId
+		})
 		.then(response => {
 			this.setState({
 				posts: response.data.data.items,
@@ -79,6 +94,34 @@ export default class PostsListPage extends Component {
 			this.setState({
 				postLoaded: true
 			})
+		});
+	};
+
+	/**
+	 * Load the post categories into the page state.
+	 */
+	loadPostCategories = () => {
+		this.setState({
+			postLoaded: false,
+			errorOnPostLoaded: false,
+		}, () => {
+
+			PostApi.listPostCategories()
+				.then(response => {
+					this.setState({
+						postCategories: response.data
+					});
+				})
+				.catch(() => {
+					this.setState({
+						errorOnPostCategoriesLoad: true
+					});
+				})
+				.finally(() => {
+					this.setState({
+						postCategoriesLoaded: true,
+					});
+				});
 		});
 	};
 
@@ -114,6 +157,22 @@ export default class PostsListPage extends Component {
 			});
 			this.componentDidMount();
 		}
+	};
+
+	/**
+	 * Change the post category.
+	 *
+	 * @returns {Promise<void>}
+	 */
+	changeCategory = async (categoryId) => {
+		const query = new URLSearchParams(this.props.location.search);
+		query.set("categoryId", categoryId);
+		query.delete("page");
+		await this.props.history.push({
+			pathname: this.props.location.pathname,
+			search: query.toString()
+		});
+		this.componentDidMount();
 	};
 
 	render() {
@@ -159,13 +218,40 @@ export default class PostsListPage extends Component {
 			);
 		}
 
+		// Compose HTML content for post categories
+		let postCategoriesHtml;
+		if (!this.state.postCategoriesLoaded) {
+			postCategoriesHtml = <div>Load post categories...</div>;
+		} else if (this.state.errorOnPostCategoriesLoad) {
+			postCategoriesHtml = <div>Failed to load post categories</div>;
+		} else {
+			postCategoriesHtml = this.state.postCategories.map((category, index) => {
+				return <div
+					onClick={() => this.changeCategory(category.id)}
+					key={index}
+					className="text-gray-700 hover:text-black smooth cursor-pointer"
+				>{category.name}</div>
+			});
+		}
+
 		return (
 			<div className="container-body">
 				<Heading title="Posts" align="center"/>
 
 				<div className="flex flex-wrap">
-					<div className="flex-1 w-full">
-						{content}
+					<div className="w-full md:w-3/4">
+						<div className="w-full pr-4">
+							{content}
+						</div>
+					</div>
+
+					<div className="w-full md:w-1/4">
+						<div className="bg-gray-200 rounded-md p-4">
+							<div className="text-lg mb-4">Post Category</div>
+							<div className="text-sm">
+								{postCategoriesHtml}
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

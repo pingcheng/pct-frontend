@@ -10,7 +10,8 @@ export class PostApi {
 		try {
 			response = await ApiClient.get("/posts", {
 				params: {
-					page: page
+					page: page,
+					categoryId: options.categoryId || null,
 				}
 			});
 		} catch (e) {
@@ -32,4 +33,20 @@ export class PostApi {
 		return response.data;
 	}
 
+	/**
+	 * List post categories.
+	 *
+	 * @returns {Promise<any>}
+	 */
+	static async listPostCategories() {
+		let response;
+
+		try {
+			response = await ApiClient.get("/postCategories");
+		} catch (e) {
+			throw e;
+		}
+
+		return response.data;
+	}
 }
