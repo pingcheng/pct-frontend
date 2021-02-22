@@ -1,19 +1,26 @@
 import React from "react";
-import loadable from "loadable-components";
+import loadable from "@loadable/component";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { RouteWrapper } from "./layouts/RouteWrapper";
 import WithNavigationMenu from "./layouts/WithNavigationMenu";
+import { Loading } from "./components/Loading/Loading";
 
-const IndexPage = loadable(() => import("./pages/Index/IndexPage"));
-const AboutPage = loadable(() => import("./pages/About/AboutPage"));
+const IndexPage = pageLoad(() => import("./pages/Index/IndexPage"));
+const AboutPage = pageLoad(() => import("./pages/About/AboutPage"));
 
-const PortfolioListPage = loadable(() => import("./pages/Portfolio/PortfolioListPage"));
-const PortfolioDetailPage = loadable(() => import("./pages/Portfolio/PortfolioDetailPage"));
+const PortfolioListPage = pageLoad(() => import("./pages/Portfolio/PortfolioListPage"));
+const PortfolioDetailPage = pageLoad(() => import("./pages/Portfolio/PortfolioDetailPage"));
 
-const PostsListPage = loadable(() => import("./pages/Posts/PostsListPage"));
-const PostDetailPage = loadable(() => import("./pages/Posts/PostDetailPage"));
+const PostsListPage = pageLoad(() => import("./pages/Posts/PostsListPage"));
+const PostDetailPage = pageLoad(() => import("./pages/Posts/PostDetailPage"));
 
-const NotFoundPage = loadable(() => import("./pages/Errors/NotFoundPage"));
+const NotFoundPage = pageLoad(() => import("./pages/Errors/NotFoundPage"));
+
+function pageLoad(callback) {
+    return loadable(callback, {
+        fallback: <Loading />
+    });
+}
 
 function App() {
   return (
