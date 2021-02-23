@@ -24,8 +24,10 @@ export default class PostDetailPage extends Component {
 	}
 
 	componentDidMount() {
+		document.title = "Loading...";
 		PostApi.getPost(this.props.match.params.slug)
 		.then(response => {
+			document.title = response.data.title;
 			this.setState({
 				title: response.data.title,
 				content: response.data.content,
@@ -34,6 +36,7 @@ export default class PostDetailPage extends Component {
 			})
 		})
 		.catch(() => {
+			document.title = "Fail to load post";
 			this.setState({
 				errorOnLoad: true
 			})

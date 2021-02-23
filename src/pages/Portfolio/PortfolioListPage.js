@@ -5,6 +5,11 @@ import { Link } from "react-router-dom";
 import { PortfolioCard } from "../../components/Portfolio/PortfolioCard";
 
 export default class PortfolioListPage extends Component {
+
+	componentDidMount() {
+		document.title = "Portfolio";
+	}
+
 	render() {
 		return (
 			<div className="container-body">

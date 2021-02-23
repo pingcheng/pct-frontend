@@ -20,6 +20,7 @@ export default class PortfolioDetailPage extends Component {
 	getPortfolioData = (slug) => {
 		for (let item of Portfolio) {
 			if (item.slug === slug) {
+				document.title = `Portfolio - ${item.name}`;
 				return item;
 			}
 		}

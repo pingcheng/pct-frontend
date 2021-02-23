@@ -43,6 +43,7 @@ export default class PostsListPage extends Component {
 	 * 2. Load posts
 	 */
 	componentDidMount() {
+		document.title = "Posts";
 		this.readUrlQueries(() => {
 			this.loadPosts();
 			this.loadPostCategories();

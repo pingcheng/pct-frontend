@@ -7,6 +7,10 @@ import { FaCloud } from "react-icons/fa";
 
 export default class AboutPage extends Component {
 
+	componentDidMount() {
+		document.title = "About me";
+	}
+
 	render() {
 		return (
 			<div className="container-body">

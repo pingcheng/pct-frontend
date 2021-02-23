@@ -8,6 +8,11 @@ import { FaAsterisk, FaRegSmileWink } from "react-icons/fa";
  * Index page.
  */
 export default class IndexPage extends Component {
+
+	componentDidMount() {
+		document.title = "Ping Cheng"
+	}
+
 	render() {
 		return (
 			<div className="h-screen flex flex-col items-center justify-center mx-auto" style={{
