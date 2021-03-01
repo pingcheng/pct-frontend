@@ -29,7 +29,7 @@ export default class IndexPage extends Component {
 
 				{/* Person brief */}
 				<div className="font-code text-gray-400">
-					<p className="mb-8">Hi! It is <span className="text-black">Ping Cheng</span> here.</p>
+					<h1 className="mb-8 text-base">Hi! It is <span className="text-black">Ping Cheng</span> here.</h1>
 					<p className="mb-8">I am a high passionate <span className="text-black">web developer</span>, enjoy the latest techs and bring them into reality.</p>
 					<p className="mb-8">Focusing on <span className="text-black">PHP, JavaScript, Linux, Server management</span>, etc...</p>
 				</div>
