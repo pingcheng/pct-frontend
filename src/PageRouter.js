@@ -28,6 +28,7 @@ export default function PageRouter() {
 
             <RouteWrapper exact path="/posts" component={PostsListPage} layout={WithNavigationMenu} />
             <RouteWrapper path="/posts/:slug" component={PostDetailPage} layout={WithNavigationMenu} />
+            <RouteWrapper path="/post/:slug" component={PostDetailPage} layout={WithNavigationMenu} />
 
             <RouteWrapper component={NotFoundPage} layout={WithNavigationMenu} />
         </Switch>
