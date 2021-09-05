@@ -82,28 +82,28 @@ export default class PostsListPage extends Component {
 		this.setState({
 			postLoaded: false,
 			errorOnPostLoaded: false
-		}, () => {
-			PostApi.listPosts(this.state.queryPage, {
-				categoryId: this.state.queryCategoryId,
-				tag: this.state.queryTag
-			})
-				.then(response => {
-					this.setState({
-						posts: response.data.data.items,
-						totalPages: response.data.data.totalPages,
-						currentPage: response.data.data.currentPage,
-					});
-				})
-				.catch(error => {
-					this.setState({
-						errorOnPostLoad: true,
-					})
-				})
-				.finally(() => {
-					this.setState({
-						postLoaded: true
-					})
+		}, async () => {
+			try {
+				const response = await PostApi.listPosts(this.state.queryPage, {
+					categoryId: this.state.queryCategoryId,
+					tag: this.state.queryTag
 				});
+
+				this.setState({
+					posts: response.data.data.items,
+					totalPages: response.data.data.total,
+					currentPage: response.data.data.currentPage,
+				});
+
+			} catch (error) {
+				this.setState({
+					errorOnPostLoad: true
+				});
+			}
+
+			this.setState({
+				postLoaded: true
+			});
 		});
 	};
 
@@ -120,24 +120,21 @@ export default class PostsListPage extends Component {
 		this.setState({
 			postCategoriesLoaded: false,
 			errorOnPostCategoriesLoad: false,
-		}, () => {
-
-			PostApi.listPostCategories()
-				.then(response => {
-					this.setState({
-						postCategories: response.data
-					});
-				})
-				.catch(() => {
-					this.setState({
-						errorOnPostCategoriesLoad: true
-					});
-				})
-				.finally(() => {
-					this.setState({
-						postCategoriesLoaded: true,
-					});
+		}, async () => {
+			try {
+				const response = await PostApi.listPostCategories();
+				this.setState({
+					postCategories: response.data
 				});
+			} catch (error) {
+				this.setState({
+					errorOnPostCategoriesLoad: true
+				});
+			}
+
+			this.setState({
+				postCategoriesLoaded: true,
+			});
 		});
 	};
 
@@ -154,23 +151,21 @@ export default class PostsListPage extends Component {
 		this.setState({
 			postTagsLoaded: false,
 			errorOnPostTagsLoad: false,
-		}, () => {
-			PostApi.listPostTags()
-				.then(response => {
-					this.setState({
-						postTags: response.data
-					});
-				})
-				.catch(() => {
-					this.setState({
-						errorOnPostTagsLoad: true,
-					});
-				})
-				.finally(() => {
-					this.setState({
-						postTagsLoaded: true,
-					})
+		}, async() => {
+			try {
+				const response = await PostApi.listPostTags();
+				this.setState({
+					postTags: response.data
 				});
+			} catch (error) {
+				this.setState({
+					errorOnPostTagsLoad: true,
+				});
+			}
+
+			this.setState({
+				postTagsLoaded: true,
+			})
 		});
 	}
 
