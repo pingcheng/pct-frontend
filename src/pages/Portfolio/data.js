@@ -1,5 +1,25 @@
 export const Portfolio = [
 	{
+		slug: "empire-cbs",
+		name: "Empire CBS",
+		shortDescription: "Empire CBS internal job management system",
+		coverImage: "https://pct-frontend-assets.s3.ap-southeast-2.amazonaws.com/portfolio/empire-cbs/empire-cbs.png",
+		url: null,
+		longDescription: "An internal job management system that helps Empire CBS to record and track their project progress and manage their resources, timesheets and etc.",
+		workplace: "Private project",
+		projectRole: "Backend & DevOps Developer",
+		roleDescription: [
+			"Backend developments",
+			"CI/CD implementation",
+			"DevOps and Server management",
+		],
+		members: [
+			"Ping Cheng - Backend & DevOps Developer",
+			"Johnson Yao - Frontend developer"
+		],
+		screenshots: []
+	},
+	{
 		slug: "pteplus",
 		name: "PTEPLUS",
 		shortDescription: "PTEPLUS provides a user friendly UI and accurate machine scoring for PTE test taker",
