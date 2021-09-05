@@ -1,6 +1,7 @@
-export const Portfolio = [
-	{
-		slug: "empire-cbs",
+import { Portfolio } from "../../models/portfolio/Portfolio";
+
+export const Portfolios = [
+	new Portfolio("empire-cbs", {
 		name: "Empire CBS",
 		shortDescription: "Empire CBS internal job management system",
 		coverImage: "https://pct-frontend-assets.s3.ap-southeast-2.amazonaws.com/portfolio/empire-cbs/empire-cbs.png",
@@ -24,9 +25,8 @@ export const Portfolio = [
 			"https://pct-frontend-assets.s3.ap-southeast-2.amazonaws.com/portfolio/empire-cbs/empire-cbs-4.png",
 
 		]
-	},
-	{
-		slug: "pteplus",
+	}),
+	new Portfolio("pteplus", {
 		name: "PTEPLUS",
 		shortDescription: "PTEPLUS provides a user friendly UI and accurate machine scoring for PTE test taker",
 		coverImage: "https://i.ibb.co/8dHnNs9/pteplus.jpg",
@@ -64,9 +64,8 @@ export const Portfolio = [
 			"https://i.ibb.co/fSYb6P5/op5.jpg",
 			"https://i.ibb.co/5hCG6cR/report-analysis.jpg",
 		]
-	},
-	{
-		slug: "pinhr",
+	}),
+	new Portfolio("pinhr", {
 		name: "PinHR",
 		shortDescription: "A customised human resources management tool",
 		coverImage: "https://i.ibb.co/6s66zCw/cover.jpg",
@@ -92,9 +91,8 @@ export const Portfolio = [
 			"https://i.ibb.co/KX2WQ9D/6.jpg",
 			"https://i.ibb.co/p0hGzL5/7.jpg"
 		]
-	},
-	{
-		slug: "vagtc",
+	}),
+	new Portfolio("vatgc", {
 		name: "VAGTC",
 		shortDescription: "The final year project in the university",
 		coverImage: "https://i.ibb.co/tm3mK47/vagtc.png",
@@ -118,8 +116,8 @@ export const Portfolio = [
 			"https://i.ibb.co/MpKJypH/3.jpg",
 			"https://i.ibb.co/pKCNmnw/4.jpg"
 		]
-	},
-	{
+	}),
+	new Portfolio("qce-eduplus", {
 		slug: "qce-eduplus",
 		name: "QCE Eduplus",
 		shortDescription: "Maths practice platform partners with Cengage for Queensland secondary schools",
@@ -150,8 +148,8 @@ export const Portfolio = [
 			"https://i.ibb.co/cXsC0Dv/7.jpg",
 			"https://i.ibb.co/YpTrWwW/8.jpg"
 		]
-	},
-	{
+	}),
+	new Portfolio("rhfoto", {
 		slug: "rhfoto",
 		name: "RH.foto",
 		shortDescription: "A simplistic and clean photo wall for a group of professional photographers",
@@ -174,5 +172,5 @@ export const Portfolio = [
 			"https://i.ibb.co/zFf2Pd1/3.jpg",
 			"https://i.ibb.co/zFf2Pd1/3.jpg"
 		]
-	},
+	}),
 ];

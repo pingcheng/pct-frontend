@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Heading } from "../../components/Heading/Heading";
-import { Portfolio } from "./data";
+import { Portfolios } from "./data";
 import { Link } from "react-router-dom";
 import { PortfolioCard } from "../../components/Portfolio/PortfolioCard";
 
@@ -16,7 +16,7 @@ export default class PortfolioListPage extends Component {
 				<Heading title="Portfolio" align="center"/>
 
 				<div className="flex flex-wrap justify-around mt-4">
-					{Portfolio.map(item => (
+					{Portfolios.map(item => (
 						<Link to={`/portfolio/${item.slug}`} key={item.slug}>
 							<PortfolioCard
 								name={item.name}

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Portfolio } from "./data";
+import { Portfolios } from "./data";
 import { Heading } from "../../components/Heading/Heading";
 import { Link } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -13,17 +13,17 @@ export default class PortfolioDetailPage extends Component {
 		super(props);
 
 		this.state = {
-			item: this.getPortfolioData(this.props.match.params.slug)
+			portfolio: this.getPortfolioData(this.props.match.params.slug)
 		};
 
 		// Set up the page title
-		document.title = `Portfolio - ${this.state.item.name}`;
+		document.title = `Portfolio - ${this.state.portfolio.name}`;
 	}
 
 	getPortfolioData = (slug) => {
-		for (let item of Portfolio) {
-			if (item.slug === slug) {
-				return item;
+		for (let portfolio of Portfolios) {
+			if (portfolio.slug === slug) {
+				return portfolio;
 			}
 		}
 
@@ -34,7 +34,7 @@ export default class PortfolioDetailPage extends Component {
 		return (
 			<div>
 				{
-					this.state.item === null ? (
+					this.state.portfolio === null ? (
 						<NotFoundPage />
 					) : (
 						<div>
@@ -45,46 +45,46 @@ export default class PortfolioDetailPage extends Component {
 								</Link>
 							</div>
 
-							<Heading title={this.state.item.name} align="center"/>
+							<Heading title={this.state.portfolio.name} align="center"/>
 
 							<div className="flex flex-wrap">
-								<div className="w-full md:w-1/2 flex justify-center items-center">
-									<PortfolioCard name={this.state.item.name}
-												   description={this.state.item.shortDescription}
-												   image={this.state.item.coverImage}/>
+								<div className="w-full md:w-1/2 flex justify-center portfolios-center">
+									<PortfolioCard name={this.state.portfolio.name}
+												   description={this.state.portfolio.shortDescription}
+												   image={this.state.portfolio.coverImage}/>
 								</div>
 
 								<div className="w-full md:w-1/2">
 									<SimpleRowData label="project">
-										{this.state.item.name}
+										{this.state.portfolio.name}
 									</SimpleRowData>
 
 									<SimpleRowData label="project url">
-										{this.state.item.url === null ? "-" : (
-											<a href={this.state.item.url}>{this.state.item.url}</a>
+										{this.state.portfolio.url === null ? "-" : (
+											<a href={this.state.portfolio.url}>{this.state.portfolio.url}</a>
 										)}
 									</SimpleRowData>
 
 									<SimpleRowData label="description">
-										{this.state.item.longDescription}
+										{this.state.portfolio.longDescription}
 									</SimpleRowData>
 
 									<SimpleRowData label="workplace">
-										{this.state.item.workplace}
+										{this.state.portfolio.workplace}
 									</SimpleRowData>
 
 									<SimpleRowData label="project role">
-										{this.state.item.projectRole}
+										{this.state.portfolio.projectRole}
 									</SimpleRowData>
 
 									<SimpleRowData label="role description">
-										{this.state.item.roleDescription.map((line, index) => (
+										{this.state.portfolio.roleDescription.map((line, index) => (
 											<div key={index}>{line}</div>
 										))}
 									</SimpleRowData>
 
 									<SimpleRowData label="team members">
-										{this.state.item.members.map((member, index) => (
+										{this.state.portfolio.members.map((member, index) => (
 											<div key={index}>{member}</div>
 										))}
 									</SimpleRowData>
@@ -98,7 +98,7 @@ export default class PortfolioDetailPage extends Component {
 
 								<div className="portfolio-screenshots">
 									{
-										this.state.item.screenshots.map((image, index) => (
+										this.state.portfolio.screenshots.map((image, index) => (
 											<img
 												key={index}
 												src={image}
