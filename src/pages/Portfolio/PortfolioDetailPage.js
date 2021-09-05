@@ -15,12 +15,14 @@ export default class PortfolioDetailPage extends Component {
 		this.state = {
 			item: this.getPortfolioData(this.props.match.params.slug)
 		};
+
+		// Set up the page title
+		document.title = `Portfolio - ${this.state.item.name}`;
 	}
 
 	getPortfolioData = (slug) => {
 		for (let item of Portfolio) {
 			if (item.slug === slug) {
-				document.title = `Portfolio - ${item.name}`;
 				return item;
 			}
 		}
