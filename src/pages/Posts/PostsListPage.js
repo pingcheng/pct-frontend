@@ -91,7 +91,7 @@ export default class PostsListPage extends Component {
 
 				this.setState({
 					posts: response.data.data.items,
-					totalPages: response.data.data.total,
+					totalPages: response.data.data.totalPages,
 					currentPage: response.data.data.currentPage,
 				});
 
