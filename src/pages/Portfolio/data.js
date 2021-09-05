@@ -17,7 +17,13 @@ export const Portfolio = [
 			"Ping Cheng - Backend & DevOps Developer",
 			"Johnson Yao - Frontend developer"
 		],
-		screenshots: []
+		screenshots: [
+			"https://pct-frontend-assets.s3.ap-southeast-2.amazonaws.com/portfolio/empire-cbs/empire-cbs-1.png",
+			"https://pct-frontend-assets.s3.ap-southeast-2.amazonaws.com/portfolio/empire-cbs/empire-cbs-2.png",
+			"https://pct-frontend-assets.s3.ap-southeast-2.amazonaws.com/portfolio/empire-cbs/empire-cbs-3.png",
+			"https://pct-frontend-assets.s3.ap-southeast-2.amazonaws.com/portfolio/empire-cbs/empire-cbs-4.png",
+
+		]
 	},
 	{
 		slug: "pteplus",
