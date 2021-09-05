@@ -92,23 +92,28 @@ export default class PortfolioDetailPage extends Component {
 								</div>
 							</div>
 
-							<div className="w-full bg-black py-10">
-								<div className="container-body">
-									<Heading title="Screenshots" align="center" className="text-white"/>
+							{
+								// Screenshots section
+								this.state.portfolio.hasScreenshots ? (
+									<div className="w-full bg-black py-10">
+										<div className="container-body">
+											<Heading title="Screenshots" align="center" className="text-white"/>
 
-									<div className="portfolio-screenshots">
-										{
-											this.state.portfolio.screenshots.map((image, index) => (
-												<img
-													key={index}
-													src={image}
-													alt="screenshot"
-												/>
-											))
-										}
+											<div className="portfolio-screenshots">
+												{
+													this.state.portfolio.screenshots.map((image, index) => (
+														<img
+															key={index}
+															src={image}
+															alt="screenshot"
+														/>
+													))
+												}
+											</div>
+										</div>
 									</div>
-								</div>
-							</div>
+								) : (<div/>)
+							}
 						</div>
 					)
 				}
