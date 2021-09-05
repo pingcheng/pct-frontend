@@ -112,7 +112,7 @@ export default class PortfolioDetailPage extends Component {
 											</div>
 										</div>
 									</div>
-								) : (<div/>)
+								) : null
 							}
 						</div>
 					)
