@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import { NavigationMenu } from "../components/Navigation/NavigationMenu";
 import { HiHeart } from "react-icons/hi";
+import { setThemeColorMatchNavBar } from "../utils/PageUtils";
 
 export default class WithNavigationMenu extends Component {
+
+	componentDidMount() {
+		setThemeColorMatchNavBar();
+	}
 
 	render() {
 		return (

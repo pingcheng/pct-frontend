@@ -3,6 +3,7 @@ import { FiGithub } from "react-icons/fi";
 import { RiArticleLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { FaAsterisk, FaRegSmileWink } from "react-icons/fa";
+import { setThemeColorMeta } from "../../utils/PageUtils";
 
 /**
  * Index page.
@@ -11,6 +12,7 @@ export default class IndexPage extends Component {
 
 	componentDidMount() {
 		document.title = "Ping Cheng"
+		setThemeColorMeta("rgb(255, 255, 255)");
 	}
 
 	render() {
