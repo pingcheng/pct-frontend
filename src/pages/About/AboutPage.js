@@ -21,6 +21,7 @@ export default class AboutPage extends Component {
 					className="rounded-full mb-10 mx-auto"
 					src="https://avatars0.githubusercontent.com/u/8447539?s=460&v=4"
 					alt="Ping Cheng"
+					width="128"
 				/>
 
 				<div className="flex flex-col">

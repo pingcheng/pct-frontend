@@ -27,6 +27,7 @@ export default class IndexPage extends Component {
 					className="rounded-full mb-10"
 					src="https://avatars0.githubusercontent.com/u/8447539?s=460&v=4"
 					alt="Ping Cheng"
+					width="192"
 				/>
 
 				{/* Person brief */}
