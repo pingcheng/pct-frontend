@@ -17,11 +17,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 12
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-southeast-2
 
       - name: Install yarn
         run: npm install -g yarn
@@ -34,6 +29,30 @@ jobs:
 
       - name: Build the production files
         run: yarn build
+
+      # publish 
+      - name: Publish artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: pct-frontend-build
+          path: './build'
+
+  deploy-production:
+    runs-on: ubuntu-latest
+    environment: 'deploy-production'
+    needs: build
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-southeast-2
+
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: pct-frontend-build
+          path: './build'
 
       - name: Deploy to s3 bucket
         run: aws s3 sync ./build s3://pingchengtech.com --delete --acl public-read
