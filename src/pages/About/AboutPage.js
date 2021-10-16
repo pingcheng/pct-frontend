@@ -88,9 +88,16 @@ export default class AboutPage extends Component {
 
 					<SimpleRowData label="work">
 						<div className="mb-2">
+							<strong>REA Group</strong>
+							<div className="text-gray-400 text-xs">
+								<span className="text-black">Developer</span> / Sept 2021 - Present
+							</div>
+						</div>
+
+						<div className="mb-2">
 							<strong>AroFlo</strong>
 							<div className="text-gray-400 text-xs">
-								<span className="text-black">Web Developer</span> / Aug 2019 - Present<br/>
+								<span className="text-black">Web Developer</span> / Aug 2019 - Sept 2021<br/>
 								Working as a full stack developer. Delivering new features to AroFlo Platform which is an industry leading product in Australia, my current main involves in the platform include but not limited to project management, quotes, invoices, payment integration areas.
 							</div>
 						</div>
