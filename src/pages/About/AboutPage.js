@@ -90,7 +90,7 @@ export default class AboutPage extends Component {
 				<div className="mb-2">
 					<strong>{experience.company}</strong>
 					<div className="text-gray-400 text-xs">
-						<span className="text-black">{experience.position}</span> / { this.formatDate(experience.startDate) } - { endDateString }<br/>
+						<span className="text-black">{experience.position}</span> / { this.formatDate(experience.startDate) } - { endDateString } ({ this.calculateWorkingLength(experience.startDate, endDate) })<br/>
 						{experience.description.map(text => <p>{text}</p>)}
 					</div>
 				</div>
@@ -116,5 +116,25 @@ export default class AboutPage extends Component {
 		];
 
 		return `${month[date.getMonth()]} ${date.getFullYear()}`;
+	}
+
+	calculateWorkingLength(startDate, endDate) {
+		const startedMonth = startDate.getFullYear() * 12 + startDate.getMonth();
+		const endedMonth = endDate.getFullYear() * 12 + endDate.getMonth();
+		const monthDiff = endedMonth - startedMonth;
+
+		const years = Math.floor(monthDiff / 12);
+		const months = monthDiff % 12;
+		const parts = [];
+
+		if (years > 0) {
+			let yearString = years + " ";
+			yearString += years === 1 ? 'year' : 'years';
+			parts.push(yearString);
+		}
+
+		parts.push(`${months} ${months === 1 ? "month" : "months"}`);
+
+		return parts.join(" ");
 	}
 }
