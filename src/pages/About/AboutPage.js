@@ -4,7 +4,7 @@ import { SimpleRowData } from "../../components/Rows/SimpleRowData";
 import { GrCode } from "react-icons/gr";
 import { IoLogoJavascript } from "react-icons/io5";
 import { FaCloud } from "react-icons/fa";
-import { workExperiences } from "./data";
+import { backendStack, devOpsStack, frontendStack, workExperiences, profile } from "./data";
 
 export default class AboutPage extends Component {
 
@@ -27,19 +27,19 @@ export default class AboutPage extends Component {
 
 				<div className="flex flex-col">
 					<SimpleRowData label="github">
-						<a href="https://github.com/pingcheng">https://github.com/pingcheng</a>
+						<a href={ profile.githubUrl }>{ profile.githubUrl }</a>
 					</SimpleRowData>
 
 					<SimpleRowData label="linkedin">
-						<a className="break-all" href="https://www.linkedin.com/in/ping-cheng-5a47b484/">https://www.linkedin.com/in/ping-cheng-5a47b484/</a>
+						<a className="break-all" href={ profile.linkedInUrl }>{ profile.linkedInUrl }</a>
 					</SimpleRowData>
 
 					<SimpleRowData label="email">
-						<a href="mailto:ping.che@hotmail.com">ping.che@hotmail.com</a>
+						<a href={ `mailto:${profile.email}` }>{ profile.email }</a>
 					</SimpleRowData>
 
 					<SimpleRowData label="stack about this site">
-						<a className="break-all" href="https://stackshare.io/pingcheng/pct" target="_blank" rel="noreferrer">https://stackshare.io/pingcheng/pct</a>
+						<a className="break-all" href={ profile.stackShareUrl } target="_blank" rel="noreferrer">{ profile.stackShareUrl }</a>
 					</SimpleRowData>
 
 					<SimpleRowData label="location">Melbourne, Australia</SimpleRowData>
@@ -53,36 +53,21 @@ export default class AboutPage extends Component {
 						<div className="mb-2">
 							<GrCode /> Backend
 							<div className="text-gray-400 text-xs">
-								PHP, Laravel, Moodle<br/>
-								Composer package development<br/>
-								Message Queue, MVC<br/>
-								MySQL, MSSQL, Redis<br/>
-								Linux management<br/>
-								Unit Testing / TDD<br/>
-								Payment Integration<br/>
-								Python, ColdFusion, Java
+								{ backendStack.map(text => <div>{ text }</div>) }
 							</div>
 						</div>
 
 						<div className="mb-2">
 							<IoLogoJavascript /> Frontend
 							<div className="text-gray-400 text-xs">
-								HTML<br/>
-								JavaScript, Vue, React, jQuery<br/>
-								CSS, SASS, TailwindCSS, Bootstrap<br/>
-								Webpack
+								{ frontendStack.map(text => <div>{ text }</div>) }
 							</div>
 						</div>
 
 						<div>
 							<FaCloud /> Cloud & DevOps
 							<div className="text-gray-400 text-xs">
-								AWS, Aliyun<br/>
-								Infrastructure planning and implementing<br/>
-								Horizontal scaling<br/>
-								Docker, ECS<br/>
-								Cloud data and files managements<br/>
-								CI/CD, GitlabCI, CircleCI
+								{ devOpsStack.map(text => <div>{ text }</div>) }
 							</div>
 						</div>
 					</SimpleRowData>
