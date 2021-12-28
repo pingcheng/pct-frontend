@@ -56,3 +56,6 @@ jobs:
 
       - name: Deploy to s3 bucket
         run: aws s3 sync ./build s3://pingchengtech.com --delete --acl public-read
+
+      - name: Invalidate CloudFront cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
