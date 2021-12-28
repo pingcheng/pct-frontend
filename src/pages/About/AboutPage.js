@@ -4,6 +4,7 @@ import { SimpleRowData } from "../../components/Rows/SimpleRowData";
 import { GrCode } from "react-icons/gr";
 import { IoLogoJavascript } from "react-icons/io5";
 import { FaCloud } from "react-icons/fa";
+import { workExperiences } from "./data";
 
 export default class AboutPage extends Component {
 
@@ -87,40 +88,48 @@ export default class AboutPage extends Component {
 					</SimpleRowData>
 
 					<SimpleRowData label="work">
-						<div className="mb-2">
-							<strong>REA Group</strong>
-							<div className="text-gray-400 text-xs">
-								<span className="text-black">Developer</span> / Sept 2021 - Present
-							</div>
-						</div>
-
-						<div className="mb-2">
-							<strong>AroFlo</strong>
-							<div className="text-gray-400 text-xs">
-								<span className="text-black">Web Developer</span> / Aug 2019 - Sept 2021<br/>
-								Working as a full stack developer. Delivering new features to AroFlo Platform which is an industry leading product in Australia, my current main involves in the platform include but not limited to project management, quotes, invoices, payment integration areas.
-							</div>
-						</div>
-
-						<div className="mb-2">
-							<strong>PTEPLUS</strong>
-							<div className="text-gray-400 text-xs">
-								<span className="text-black">Development Lead</span> / Jan 2018 - May 2019<br/>
-								Work with the dev team on two main products. Design and implement IT architecture on the clouding computing platforms (AWS and Aliyun). Deliver stable, rapid responsible and reliable web applications to product's users.
-							</div>
-						</div>
-
-						<div>
-							<strong>PTEPLUS</strong>
-							<div className="text-gray-400 text-xs">
-								<span className="text-black">Full Stack PHP Developer</span> /  Oct 2016 - Jan 2018<br/>
-								One of the key contributors to the start-up company, and participated in almost every stage of product design, implement and testing. Took responsibilities on full solutions to the technical side such as coding and servers’ setup.
-							</div>
-						</div>
+						{ this.renderWorkExperience(workExperiences) }
 					</SimpleRowData>
 				</div>
 			</div>
 		)
 	}
 
+	renderWorkExperience(experiences = []) {
+		return experiences.map(experience => {
+
+			const endDate = experience.endDate ?? new Date();
+			const endDateString = experience.endDate === null ? 'Present' : this.formatDate(endDate);
+
+			return (
+				<div className="mb-2">
+					<strong>{experience.company}</strong>
+					<div className="text-gray-400 text-xs">
+						<span className="text-black">{experience.position}</span> / { this.formatDate(experience.startDate) } - { endDateString }<br/>
+						{experience.description.map(text => <p>{text}</p>)}
+					</div>
+				</div>
+			);
+		});
+	}
+
+	formatDate(date) {
+
+		const month = [
+			'Jan',
+			'Feb',
+			'Mar',
+			'Apr',
+			'May',
+			'Jun',
+			'Jul',
+			'Aug',
+			'Sept',
+			'Oct',
+			'Nov',
+			'Dev'
+		];
+
+		return `${month[date.getMonth()]} ${date.getFullYear()}`;
+	}
 }
