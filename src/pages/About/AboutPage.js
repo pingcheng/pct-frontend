@@ -96,7 +96,7 @@ function renderWorkExperience(experiences = []) {
 	});
 }
 
-function formatDate(date) {
+export function formatDate(date) {
 
 	const month = [
 		'Jan',
@@ -110,7 +110,7 @@ function formatDate(date) {
 		'Sept',
 		'Oct',
 		'Nov',
-		'Dev'
+		'Dec'
 	];
 
 	return `${month[date.getMonth()]} ${date.getFullYear()}`;
