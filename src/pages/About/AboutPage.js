@@ -86,7 +86,7 @@ function renderWorkExperience(experiences = []) {
 
 		return (
 			<div className="mb-2">
-				<strong>{experience.company}</strong>
+				<div>{experience.company}</div>
 				<div className="text-gray-400 text-xs">
 					<span className="text-black">{experience.position}</span> / { formatDate(experience.startDate) } - { endDateString } ({ calculateWorkingLength(experience.startDate, endDate) })<br/>
 					{experience.description.map(text => <p>{text}</p>)}
