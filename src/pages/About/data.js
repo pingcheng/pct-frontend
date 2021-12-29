@@ -1,10 +1,3 @@
-export const profile = {
-    githubUrl: "https://github.com/pingcheng",
-    linkedInUrl: "https://www.linkedin.com/in/ping-cheng-5a47b484/",
-    email: "ping.che@hotmail.com",
-    stackShareUrl: "https://stackshare.io/pingcheng/pct"
-};
-
 export const workExperiences = [
     {
         company: "REA Group",
