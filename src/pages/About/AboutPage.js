@@ -116,7 +116,7 @@ export function formatDate(date) {
 	return `${month[date.getMonth()]} ${date.getFullYear()}`;
 }
 
-function calculateWorkingLength(startDate, endDate) {
+export function calculateWorkingLength(startDate, endDate) {
 	const startedMonth = startDate.getFullYear() * 12 + startDate.getMonth();
 	const endedMonth = endDate.getFullYear() * 12 + endDate.getMonth();
 	const monthDiff = endedMonth - startedMonth;

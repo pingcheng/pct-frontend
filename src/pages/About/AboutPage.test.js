@@ -1,5 +1,5 @@
 import each from "jest-each"
-import {formatDate} from "./AboutPage";
+import {calculateWorkingLength, formatDate} from "./AboutPage";
 
 describe("formatDate should return correct data", () => {
     each([
@@ -25,4 +25,20 @@ describe("formatDate should return correct data", () => {
         expect(dateParts[0]).toBe(expected);
         expect(dateParts[1]).toBe(date.getFullYear().toString());
     })
+});
+
+describe("calculateWorkingLength should return correct length", () => {
+    each([
+        [new Date(2021, 1), new Date(2021, 1), "0 months"],
+        [new Date(2021, 1), new Date(2021, 2), "1 month"],
+        [new Date(2021, 1), new Date(2021, 10), "9 months"],
+        [new Date(2021, 1), new Date(2022, 1), "1 year 0 months"],
+        [new Date(2021, 1), new Date(2022, 2), "1 year 1 month"],
+        [new Date(2021, 1), new Date(2022, 3), "1 year 2 months"],
+        [new Date(2021, 1), new Date(2023, 1), "2 years 0 months"],
+        [new Date(2021, 1), new Date(2023, 2), "2 years 1 month"],
+        [new Date(2021, 1), new Date(2023, 3), "2 years 2 months"],
+    ]).it("The length between %s and %s is '%s'", (start, end, expected) => {
+        expect(calculateWorkingLength(start, end)).toBe(expected);
+    });
 });
