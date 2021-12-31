@@ -14,5 +14,5 @@ export default function usePageViews () {
             console.log(location.pathname + location.search);
         },
         [location]
-    )
+    );
 }

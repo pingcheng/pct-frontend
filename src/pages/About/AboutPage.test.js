@@ -1,4 +1,4 @@
-import each from "jest-each"
+import each from "jest-each";
 import {calculateWorkingLength, formatDate} from "./AboutPage";
 
 describe("formatDate should return correct data", () => {
@@ -24,7 +24,7 @@ describe("formatDate should return correct data", () => {
         expect(dateParts.length).toBe(2);
         expect(dateParts[0]).toBe(expected);
         expect(dateParts[1]).toBe(date.getFullYear().toString());
-    })
+    });
 });
 
 describe("calculateWorkingLength should return correct length", () => {
