@@ -6,13 +6,16 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { PortfolioCard } from "../../components/Portfolio/PortfolioCard";
 import { SimpleRowData } from "../../components/Rows/SimpleRowData";
 import NotFoundPage from "../Errors/NotFoundPage";
-import PropTypes from "prop-types";
+import PropTypes, { InferProps } from "prop-types";
+import { Portfolio } from "../../models/portfolio/Portfolio";
 
-export default function PortfolioDetailPage(props) {
-  const [portfolio, setPortfolio] = useState(null);
+export default function PortfolioDetailPage(
+  props: InferProps<typeof PortfolioDetailPage.propTypes>
+) {
+  const [portfolio, setPortfolio] = useState<Portfolio | null>(null);
 
-  useEffect(async () => {
-    await setPortfolio(getPortfolioData(props.match.params.slug));
+  useEffect(() => {
+    setPortfolio(getPortfolioData(props.match.params.slug));
 
     if (portfolio !== null) {
       document.title = `Portfolio - ${portfolio.name || "Not Found"}`;
@@ -107,8 +110,8 @@ export default function PortfolioDetailPage(props) {
   );
 }
 
-function getPortfolioData(slug) {
-  for (let portfolio of Portfolios) {
+function getPortfolioData(slug: string): Portfolio | null {
+  for (const portfolio of Portfolios) {
     if (portfolio.slug === slug) {
       return portfolio;
     }
@@ -120,7 +123,7 @@ function getPortfolioData(slug) {
 PortfolioDetailPage.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
-      slug: PropTypes.string,
-    }),
-  }),
+      slug: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
 };

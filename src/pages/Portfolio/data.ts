@@ -121,7 +121,6 @@ export const Portfolios = [
     ],
   }),
   new Portfolio("qce-eduplus", {
-    slug: "qce-eduplus",
     name: "QCE Eduplus",
     shortDescription:
       "Maths practice platform partners with Cengage for Queensland secondary schools",
@@ -155,7 +154,6 @@ export const Portfolios = [
     ],
   }),
   new Portfolio("rhfoto", {
-    slug: "rhfoto",
     name: "RH.foto",
     shortDescription:
       "A simplistic and clean photo wall for a group of professional photographers",
