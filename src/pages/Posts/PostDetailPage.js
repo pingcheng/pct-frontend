@@ -11,114 +11,123 @@ import { DiscussionEmbed } from "disqus-react";
 import PropTypes from "prop-types";
 
 export default class PostDetailPage extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            loaded: false,
-            errorOnLoad: false,
-            title: "",
-            content: false,
-            tags: [],
-            timeCreated: DateTime.now()
-        };
+    this.state = {
+      loaded: false,
+      errorOnLoad: false,
+      title: "",
+      content: false,
+      tags: [],
+      timeCreated: DateTime.now(),
+    };
+  }
+
+  componentDidMount() {
+    document.title = "Loading...";
+    PostApi.getPost(this.props.match.params.slug)
+      .then((response) => {
+        document.title = response.data.title;
+        this.setState({
+          title: response.data.title,
+          content: response.data.content,
+          tags: response.data.tags,
+          timeCreated: DateTime.fromISO(response.data.timeCreated),
+        });
+      })
+      .catch(() => {
+        document.title = "Fail to load post";
+        this.setState({
+          errorOnLoad: true,
+        });
+      })
+      .finally(() => {
+        this.setState({
+          loaded: true,
+        });
+      });
+  }
+
+  render() {
+    let content;
+
+    if (!this.state.loaded) {
+      content = <div className="text-center">Loading...</div>;
+    } else if (this.state.errorOnLoad) {
+      content = <div className="text-center">Failed to load</div>;
+    } else {
+      const renderers = {
+        code: ({ language, value }) => {
+          return (
+            <SyntaxHighlighter
+              style={atomOneDarkReasonable}
+              language={language}
+            >
+              {value}
+            </SyntaxHighlighter>
+          );
+        },
+      };
+
+      const subtitle = (
+        <div>
+          <span>
+            <BiTimeFive /> {this.state.timeCreated.toISODate()}
+          </span>
+          <span className="pl-4">
+            <BsTagFill /> {this.state.tags.join(", ")}
+          </span>
+        </div>
+      );
+
+      content = (
+        <div>
+          <Heading
+            title={this.state.title}
+            subTitle={subtitle}
+            className="text-2xl md:text-3xl"
+          />
+
+          <div className="post-body">
+            <ReactMarkdown renderers={renderers}>
+              {this.state.content}
+            </ReactMarkdown>
+          </div>
+        </div>
+      );
     }
 
-    componentDidMount() {
-        document.title = "Loading...";
-        PostApi.getPost(this.props.match.params.slug)
-            .then(response => {
-                document.title = response.data.title;
-                this.setState({
-                    title: response.data.title,
-                    content: response.data.content,
-                    tags: response.data.tags,
-                    timeCreated: DateTime.fromISO(response.data.timeCreated)
-                });
-            })
-            .catch(() => {
-                document.title = "Fail to load post";
-                this.setState({
-                    errorOnLoad: true
-                });
-            })
-            .finally(() => {
-                this.setState({
-                    loaded: true
-                });
-            });
+    let disqusContent;
+    if (this.state.loaded && !this.state.errorOnLoad) {
+      disqusContent = (
+        <DiscussionEmbed
+          shortname="pingchengtech"
+          config={{
+            url: `${window.location.origin}${this.props.location.pathname}`,
+            identifier: `post/${this.props.match.params.slug}`,
+            title: this.state.title,
+          }}
+        />
+      );
     }
 
-    render() {
-
-        let content;
-
-        if (!this.state.loaded) {
-            content = <div className="text-center">Loading...</div>;
-        } else if (this.state.errorOnLoad) {
-            content = <div className="text-center">Failed to load</div>;
-        } else {
-
-            const renderers = {
-                code: ({language, value}) => {
-                    return <SyntaxHighlighter style={atomOneDarkReasonable} language={language}>{value}</SyntaxHighlighter>;
-                }
-            };
-
-            const subtitle = (
-                <div>
-                    <span><BiTimeFive /> {this.state.timeCreated.toISODate()}</span>
-                    <span className="pl-4"><BsTagFill /> {this.state.tags.join(", ")}</span>
-                </div>
-            );
-
-            content = (
-                <div>
-                    <Heading title={this.state.title} subTitle={subtitle} className="text-2xl md:text-3xl" />
-
-                    <div className="post-body">
-                        <ReactMarkdown renderers={renderers}>{this.state.content}</ReactMarkdown>
-                    </div>
-                </div>
-            );
-        }
-
-        let disqusContent;
-        if (this.state.loaded && !this.state.errorOnLoad) {
-            disqusContent = (
-                <DiscussionEmbed
-                    shortname="pingchengtech"
-                    config={
-                        {
-                            url: `${window.location.origin}${this.props.location.pathname}`,
-                            identifier: `post/${this.props.match.params.slug}`,
-                            title: this.state.title
-                        }
-                    }
-                />
-            );
-        }
-
-        return (
-            <div className="container-body">
-                <div>
-                    {content}
-                </div>
-                <div>
-                    {disqusContent}
-                </div>
-            </div>
-        );
-    }
+    return (
+      <div className="container-body">
+        <div>{content}</div>
+        <div>{disqusContent}</div>
+      </div>
+    );
+  }
 }
 
 PostDetailPage.propTypes = {
-    match: PropTypes.shape({
-        params: PropTypes.shape({
-            slug: PropTypes.string
-        })
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      slug: PropTypes.string,
     }),
-    location: PropTypes.shape({
-        pathname: PropTypes.string
-    })
+  }),
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }),
 };

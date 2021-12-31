@@ -6,11 +6,11 @@
  * @returns {null|number}
  */
 export function integerOrNull(value) {
-    const valueCopy = parseInt(value);
+  const valueCopy = parseInt(value);
 
-    if (Number.isInteger(valueCopy)) {
-        return valueCopy;
-    }
+  if (Number.isInteger(valueCopy)) {
+    return valueCopy;
+  }
 
-    return null;
+  return null;
 }

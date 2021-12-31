@@ -4,13 +4,13 @@ import PageRouter from "./PageRouter";
 import "./injections/Sentry";
 
 function App() {
-    return (
-        <div className="App">
-            <BrowserRouter>
-                <PageRouter />
-            </BrowserRouter>
-        </div>
-    );
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <PageRouter />
+      </BrowserRouter>
+    </div>
+  );
 }
 
 export default App;

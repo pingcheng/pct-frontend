@@ -12,392 +12,431 @@ import { updateSearchQueries } from "../../utils/UrlUtils";
 import PropTypes from "prop-types";
 
 export default class PostsListPage extends Component {
+  constructor(props) {
+    super(props);
 
-    constructor(props) {
-        super(props);
+    this.state = {
+      postLoaded: false,
+      errorOnPostLoad: false,
+      posts: [],
+      totalPages: 1,
+      currentPage: 1,
 
-        this.state = {
-            postLoaded: false,
-            errorOnPostLoad: false,
-            posts: [],
-            totalPages: 1,
-            currentPage: 1,
+      postCategoriesLoaded: false,
+      errorOnPostCategoriesLoad: false,
+      postCategories: [],
 
-            postCategoriesLoaded: false,
-            errorOnPostCategoriesLoad: false,
-            postCategories: [],
+      // Post Tags states
+      postTagsLoaded: false,
+      errorOnPostTagsLoad: false,
+      postTag: [],
 
-            // Post Tags states
-            postTagsLoaded: false,
-            errorOnPostTagsLoad: false,
-            postTag: [],
-
-            queryPage: 1,
-            queryCategoryId: null,
-            queryTag: null,
-        };
-    }
-
-    /**
-     * Event handler when component is loaded
-     * 1. Read the url search query
-     * 2. Load posts
-     */
-    componentDidMount() {
-        document.title = "Posts";
-        this.readUrlQueries(() => {
-            this.loadPosts();
-            this.loadPostCategories();
-            this.loadPostTags();
-        });
-    }
-
-    componentDidUpdate(prevProps) {
-        // Watch the url search string, "remount" the component when the query string changed.
-        if (prevProps.location.search !== this.props.location.search) {
-            this.componentDidMount();
-        }
-    }
-
-    /**
-     * Read the query string and put them into state
-     *
-     * @param next
-     */
-    readUrlQueries(next) {
-        const query = new URLSearchParams(this.props.location.search);
-        const updates = {};
-
-        updates.queryPage = integerOrNull(query.get("page")) || 1;
-        updates.queryCategoryId = integerOrNull(query.get("categoryId"));
-        updates.queryTag = query.get("tag");
-
-        this.setState(updates, next);
-    }
-
-    /**
-     * Load the posts.
-     */
-    loadPosts = () => {
-
-        this.setState({
-            postLoaded: false,
-            errorOnPostLoaded: false
-        }, async () => {
-            try {
-                const response = await PostApi.listPosts(this.state.queryPage, {
-                    categoryId: this.state.queryCategoryId,
-                    tag: this.state.queryTag
-                });
-
-                this.setState({
-                    posts: response.data.data.items,
-                    totalPages: response.data.data.totalPages,
-                    currentPage: response.data.data.currentPage,
-                });
-
-            } catch (error) {
-                this.setState({
-                    errorOnPostLoad: true
-                });
-            }
-
-            this.setState({
-                postLoaded: true
-            });
-        });
+      queryPage: 1,
+      queryCategoryId: null,
+      queryTag: null,
     };
+  }
 
-    /**
-     * Load the post categories into the page state.
-     */
-    loadPostCategories = () => {
+  /**
+   * Event handler when component is loaded
+   * 1. Read the url search query
+   * 2. Load posts
+   */
+  componentDidMount() {
+    document.title = "Posts";
+    this.readUrlQueries(() => {
+      this.loadPosts();
+      this.loadPostCategories();
+      this.loadPostTags();
+    });
+  }
 
-        // If the category is already loaded, then we don't need to reload them.
-        if (this.state.postCategoriesLoaded) {
-            return;
+  componentDidUpdate(prevProps) {
+    // Watch the url search string, "remount" the component when the query string changed.
+    if (prevProps.location.search !== this.props.location.search) {
+      this.componentDidMount();
+    }
+  }
+
+  /**
+   * Read the query string and put them into state
+   *
+   * @param next
+   */
+  readUrlQueries(next) {
+    const query = new URLSearchParams(this.props.location.search);
+    const updates = {};
+
+    updates.queryPage = integerOrNull(query.get("page")) || 1;
+    updates.queryCategoryId = integerOrNull(query.get("categoryId"));
+    updates.queryTag = query.get("tag");
+
+    this.setState(updates, next);
+  }
+
+  /**
+   * Load the posts.
+   */
+  loadPosts = () => {
+    this.setState(
+      {
+        postLoaded: false,
+        errorOnPostLoaded: false,
+      },
+      async () => {
+        try {
+          const response = await PostApi.listPosts(this.state.queryPage, {
+            categoryId: this.state.queryCategoryId,
+            tag: this.state.queryTag,
+          });
+
+          this.setState({
+            posts: response.data.data.items,
+            totalPages: response.data.data.totalPages,
+            currentPage: response.data.data.currentPage,
+          });
+        } catch (error) {
+          this.setState({
+            errorOnPostLoad: true,
+          });
         }
 
         this.setState({
-            postCategoriesLoaded: false,
-            errorOnPostCategoriesLoad: false,
-        }, async () => {
-            try {
-                const response = await PostApi.listPostCategories();
-                this.setState({
-                    postCategories: response.data
-                });
-            } catch (error) {
-                this.setState({
-                    errorOnPostCategoriesLoad: true
-                });
-            }
-
-            this.setState({
-                postCategoriesLoaded: true,
-            });
+          postLoaded: true,
         });
-    };
+      }
+    );
+  };
 
-    /**
-     * Load the post tags into the page state.
-     */
-    loadPostTags = () => {
+  /**
+   * Load the post categories into the page state.
+   */
+  loadPostCategories = () => {
+    // If the category is already loaded, then we don't need to reload them.
+    if (this.state.postCategoriesLoaded) {
+      return;
+    }
 
-        // If post tags are already loaded, then we don't need to reload them.
-        if (this.state.postTagsLoaded) {
-            return;
+    this.setState(
+      {
+        postCategoriesLoaded: false,
+        errorOnPostCategoriesLoad: false,
+      },
+      async () => {
+        try {
+          const response = await PostApi.listPostCategories();
+          this.setState({
+            postCategories: response.data,
+          });
+        } catch (error) {
+          this.setState({
+            errorOnPostCategoriesLoad: true,
+          });
         }
 
         this.setState({
-            postTagsLoaded: false,
-            errorOnPostTagsLoad: false,
-        }, async() => {
-            try {
-                const response = await PostApi.listPostTags();
-                this.setState({
-                    postTags: response.data
-                });
-            } catch (error) {
-                this.setState({
-                    errorOnPostTagsLoad: true,
-                });
-            }
-
-            this.setState({
-                postTagsLoaded: true,
-            });
+          postCategoriesLoaded: true,
         });
+      }
+    );
+  };
+
+  /**
+   * Load the post tags into the page state.
+   */
+  loadPostTags = () => {
+    // If post tags are already loaded, then we don't need to reload them.
+    if (this.state.postTagsLoaded) {
+      return;
     }
 
-    /**
-     * Go to the next page.
-     *
-     * @returns {Promise<void>}
-     */
-    nextPage = () => {
-        if (this.state.postLoaded) {
-            this.props.history.push({
-                pathname: this.props.location.pathname,
-                search: updateSearchQueries(this.props.location.search, {
-                    page: this.state.queryPage + 1
-                }).toString()
-            });
+    this.setState(
+      {
+        postTagsLoaded: false,
+        errorOnPostTagsLoad: false,
+      },
+      async () => {
+        try {
+          const response = await PostApi.listPostTags();
+          this.setState({
+            postTags: response.data,
+          });
+        } catch (error) {
+          this.setState({
+            errorOnPostTagsLoad: true,
+          });
         }
-    };
 
-    /**
-     * Go to the previous page.
-     *
-     * @returns {Promise<void>}
-     */
-    previousPage = () => {
-        if (this.state.postLoaded) {
-            this.props.history.push({
-                pathname: this.props.location.pathname,
-                search: updateSearchQueries(this.props.location.search, {
-                    page: this.state.queryPage - 1
-                }).toString()
-            });
-        }
-    };
-
-    /**
-     * Change the post category.
-     */
-    changeCategory = (categoryId) => {
-        this.props.history.push({
-            pathname: this.props.location.pathname,
-            search: updateSearchQueries(this.props.location.search, {
-                categoryId: categoryId,
-                page: null
-            }).toString()
+        this.setState({
+          postTagsLoaded: true,
         });
-    };
+      }
+    );
+  };
 
-    /**
-     * Change the post tag.
-     *
-     * @param tag
-     */
-    changeTag = (tag) => {
-        this.props.history.push({
-            pathname: this.props.location.pathname,
-            search: updateSearchQueries(this.props.location.search, {
-                tag: tag,
-                page: null
-            }).toString()
-        });
+  /**
+   * Go to the next page.
+   *
+   * @returns {Promise<void>}
+   */
+  nextPage = () => {
+    if (this.state.postLoaded) {
+      this.props.history.push({
+        pathname: this.props.location.pathname,
+        search: updateSearchQueries(this.props.location.search, {
+          page: this.state.queryPage + 1,
+        }).toString(),
+      });
     }
+  };
 
-    /**
-     * Remove a param from url search.
-     *
-     * @param name
-     */
-    removeUrlQuery = (name) => {
-        this.props.history.push({
-            pathname: this.props.location.pathname,
-            search: updateSearchQueries(this.props.location.search, {
-                [name]: null
-            }).toString()
-        });
+  /**
+   * Go to the previous page.
+   *
+   * @returns {Promise<void>}
+   */
+  previousPage = () => {
+    if (this.state.postLoaded) {
+      this.props.history.push({
+        pathname: this.props.location.pathname,
+        search: updateSearchQueries(this.props.location.search, {
+          page: this.state.queryPage - 1,
+        }).toString(),
+      });
     }
+  };
 
-    render() {
+  /**
+   * Change the post category.
+   */
+  changeCategory = (categoryId) => {
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: updateSearchQueries(this.props.location.search, {
+        categoryId: categoryId,
+        page: null,
+      }).toString(),
+    });
+  };
 
-        const renderers = {
-            code: ({language, value}) => {
-                return <SyntaxHighlighter style={atomOneDarkReasonable} language={language}>{value}</SyntaxHighlighter>;
-            }
-        };
+  /**
+   * Change the post tag.
+   *
+   * @param tag
+   */
+  changeTag = (tag) => {
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: updateSearchQueries(this.props.location.search, {
+        tag: tag,
+        page: null,
+      }).toString(),
+    });
+  };
 
-        // Compose post html
-        let content;
-        if (!this.state.postLoaded) {
-            content = <div className="text-center">Loading...</div>;
-        } else if (this.state.errorOnPostLoad) {
-            content = <div className="text-center">Failed to load posts</div>;
-        } else if (this.state.posts.length > 0) {
-            content = this.state.posts.map((post, index) => {
-                const date = DateTime.fromISO(post.timeCreated);
-                const link = `/posts/${post.slug}`;
-                return (
-                    <div className="mb-10" key={index}>
-                        <Link to={link}>
-                            <h2 className="text-2xl mb-4 md:text-3xl">
-                                <div className="font-bold">{post.title}</div>
-                                <div className="text-sm text-gray-500"><BiTimeFive /> {date.toISODate()}</div>
-                            </h2>
-                        </Link>
+  /**
+   * Remove a param from url search.
+   *
+   * @param name
+   */
+  removeUrlQuery = (name) => {
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: updateSearchQueries(this.props.location.search, {
+        [name]: null,
+      }).toString(),
+    });
+  };
 
-                        <div className="post-body">
-                            <ReactMarkdown className="text-base text-black mb-4" renderers={renderers}>{post.content}</ReactMarkdown>
-                        </div>
-
-                        <Link to={link} className="text-blue-500">[ Read More ]</Link>
-                    </div>
-                );
-            });
-
-            content.push(
-                <div className="flex justify-between mb-4" key="paginator">
-                    {this.state.currentPage > 1 ? <div onClick={this.previousPage} className="text-blue-500 cursor-pointer">Previous Page</div> : <div> </div>}
-                    {this.state.currentPage < this.state.totalPages ? <div onClick={this.nextPage} className="text-blue-500 cursor-pointer">Next Page</div> : <div> </div>}
-                </div>
-            );
-        } else {
-            content = <div>No posts found :(</div>;
-        }
-
-        // Compose HTML content for post categories
-        let postCategoriesHtml;
-        if (!this.state.postCategoriesLoaded) {
-            postCategoriesHtml = <div>Load post categories...</div>;
-        } else if (this.state.errorOnPostCategoriesLoad) {
-            postCategoriesHtml = <div>Failed to load post categories</div>;
-        } else {
-            postCategoriesHtml = this.state.postCategories.map((category, index) => {
-                return <div
-                    onClick={() => this.changeCategory(category.id)}
-                    key={index}
-                    className="text-gray-500 hover:text-black smooth cursor-pointer"
-                >{category.name}</div>;
-            });
-        }
-
-        // Compose HTML content for post tags
-        let postTagsHtml;
-        if (!this.state.postTagsLoaded) {
-            postTagsHtml = <div>Load post tags...</div>;
-        } else if (this.state.errorOnPostTagsLoad) {
-            postTagsHtml = <div>Failed to load post tags</div>;
-        } else {
-            postTagsHtml = this.state.postTags.map((tag, index) => {
-                return <div
-                    onClick={() => this.changeTag(tag)}
-                    key={index}
-                    className="text-gray-500 hover:text-black smooth cursor-pointer mr-2 inline-block"
-                >{tag}</div>;
-            });
-        }
-
-        let filterHtml = [];
-        if (this.state.queryCategoryId !== null && this.state.postCategoriesLoaded) {
-            let categoryName = "Unknown";
-            for (let category of this.state.postCategories) {
-                if (category.id === this.state.queryCategoryId) {
-                    categoryName = category.name;
-                    break;
-                }
-            }
-
-            filterHtml.push((
-                <div
-                    onClick={() => this.removeUrlQuery("categoryId")}
-                    className="inline-block px-2 py-1 rounded-lg bg-gray-100 text-xs hover:text-black cursor-pointer hover:bg-gray-300 smooth mr-2"
-                >
-                    ✕ Category - {categoryName}
-                </div>
-            ));
-        }
-
-        if (this.state.queryTag !== null && this.state.postTagsLoaded) {
-            filterHtml.push((
-                <div
-                    onClick={() => this.removeUrlQuery("tag")}
-                    className="inline-block px-2 py-1 rounded-lg bg-gray-100 text-xs hover:text-black cursor-pointer hover:bg-gray-300 smooth mr-2"
-                >
-                    ✕ Tag - {this.state.queryTag}
-                </div>
-            ));
-        }
-
+  render() {
+    const renderers = {
+      code: ({ language, value }) => {
         return (
-            <div className="container-body">
-                <div>
-                    <Heading title="Posts" align="center" subTitle={filterHtml}/>
-                </div>
-
-                <div className="flex flex-wrap">
-                    <div className="w-full md:w-3/4">
-                        <div className="w-full pr-4">
-                            {content}
-                        </div>
-                    </div>
-
-                    <div className="w-full md:w-1/4">
-                        <div className="bg-gray-100 rounded-md p-4 mb-4">
-                            <div className="text-lg mb-4">Category</div>
-                            <div className="text-sm">
-                                {postCategoriesHtml}
-                            </div>
-                        </div>
-
-                        <div className="bg-gray-100 rounded-md p-4">
-                            <div className="text-lg mb-4">Tags</div>
-                            <div className="text-sm w-full">
-                                {postTagsHtml}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          <SyntaxHighlighter style={atomOneDarkReasonable} language={language}>
+            {value}
+          </SyntaxHighlighter>
         );
+      },
+    };
+
+    // Compose post html
+    let content;
+    if (!this.state.postLoaded) {
+      content = <div className="text-center">Loading...</div>;
+    } else if (this.state.errorOnPostLoad) {
+      content = <div className="text-center">Failed to load posts</div>;
+    } else if (this.state.posts.length > 0) {
+      content = this.state.posts.map((post, index) => {
+        const date = DateTime.fromISO(post.timeCreated);
+        const link = `/posts/${post.slug}`;
+        return (
+          <div className="mb-10" key={index}>
+            <Link to={link}>
+              <h2 className="text-2xl mb-4 md:text-3xl">
+                <div className="font-bold">{post.title}</div>
+                <div className="text-sm text-gray-500">
+                  <BiTimeFive /> {date.toISODate()}
+                </div>
+              </h2>
+            </Link>
+
+            <div className="post-body">
+              <ReactMarkdown
+                className="text-base text-black mb-4"
+                renderers={renderers}
+              >
+                {post.content}
+              </ReactMarkdown>
+            </div>
+
+            <Link to={link} className="text-blue-500">
+              [ Read More ]
+            </Link>
+          </div>
+        );
+      });
+
+      content.push(
+        <div className="flex justify-between mb-4" key="paginator">
+          {this.state.currentPage > 1 ? (
+            <div
+              onClick={this.previousPage}
+              className="text-blue-500 cursor-pointer"
+            >
+              Previous Page
+            </div>
+          ) : (
+            <div> </div>
+          )}
+          {this.state.currentPage < this.state.totalPages ? (
+            <div
+              onClick={this.nextPage}
+              className="text-blue-500 cursor-pointer"
+            >
+              Next Page
+            </div>
+          ) : (
+            <div> </div>
+          )}
+        </div>
+      );
+    } else {
+      content = <div>No posts found :(</div>;
     }
+
+    // Compose HTML content for post categories
+    let postCategoriesHtml;
+    if (!this.state.postCategoriesLoaded) {
+      postCategoriesHtml = <div>Load post categories...</div>;
+    } else if (this.state.errorOnPostCategoriesLoad) {
+      postCategoriesHtml = <div>Failed to load post categories</div>;
+    } else {
+      postCategoriesHtml = this.state.postCategories.map((category, index) => {
+        return (
+          <div
+            onClick={() => this.changeCategory(category.id)}
+            key={index}
+            className="text-gray-500 hover:text-black smooth cursor-pointer"
+          >
+            {category.name}
+          </div>
+        );
+      });
+    }
+
+    // Compose HTML content for post tags
+    let postTagsHtml;
+    if (!this.state.postTagsLoaded) {
+      postTagsHtml = <div>Load post tags...</div>;
+    } else if (this.state.errorOnPostTagsLoad) {
+      postTagsHtml = <div>Failed to load post tags</div>;
+    } else {
+      postTagsHtml = this.state.postTags.map((tag, index) => {
+        return (
+          <div
+            onClick={() => this.changeTag(tag)}
+            key={index}
+            className="text-gray-500 hover:text-black smooth cursor-pointer mr-2 inline-block"
+          >
+            {tag}
+          </div>
+        );
+      });
+    }
+
+    let filterHtml = [];
+    if (
+      this.state.queryCategoryId !== null &&
+      this.state.postCategoriesLoaded
+    ) {
+      let categoryName = "Unknown";
+      for (let category of this.state.postCategories) {
+        if (category.id === this.state.queryCategoryId) {
+          categoryName = category.name;
+          break;
+        }
+      }
+
+      filterHtml.push(
+        <div
+          onClick={() => this.removeUrlQuery("categoryId")}
+          className="inline-block px-2 py-1 rounded-lg bg-gray-100 text-xs hover:text-black cursor-pointer hover:bg-gray-300 smooth mr-2"
+        >
+          ✕ Category - {categoryName}
+        </div>
+      );
+    }
+
+    if (this.state.queryTag !== null && this.state.postTagsLoaded) {
+      filterHtml.push(
+        <div
+          onClick={() => this.removeUrlQuery("tag")}
+          className="inline-block px-2 py-1 rounded-lg bg-gray-100 text-xs hover:text-black cursor-pointer hover:bg-gray-300 smooth mr-2"
+        >
+          ✕ Tag - {this.state.queryTag}
+        </div>
+      );
+    }
+
+    return (
+      <div className="container-body">
+        <div>
+          <Heading title="Posts" align="center" subTitle={filterHtml} />
+        </div>
+
+        <div className="flex flex-wrap">
+          <div className="w-full md:w-3/4">
+            <div className="w-full pr-4">{content}</div>
+          </div>
+
+          <div className="w-full md:w-1/4">
+            <div className="bg-gray-100 rounded-md p-4 mb-4">
+              <div className="text-lg mb-4">Category</div>
+              <div className="text-sm">{postCategoriesHtml}</div>
+            </div>
+
+            <div className="bg-gray-100 rounded-md p-4">
+              <div className="text-lg mb-4">Tags</div>
+              <div className="text-sm w-full">{postTagsHtml}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 PostsListPage.propTypes = {
-    match: PropTypes.shape({
-        params: PropTypes.shape({
-            slug: PropTypes.string
-        })
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      slug: PropTypes.string,
     }),
-    location: PropTypes.shape({
-        pathname: PropTypes.string,
-        search: PropTypes.string,
-    }),
-    history: PropTypes.shape({
-        push: PropTypes.func
-    })
+  }),
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+    search: PropTypes.string,
+  }),
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
 };

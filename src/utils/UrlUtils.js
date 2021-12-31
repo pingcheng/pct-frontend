@@ -6,17 +6,17 @@
  * @returns {URLSearchParams}
  */
 export function updateSearchQueries(currentSearch, updatedSearch) {
-    const search = new URLSearchParams(currentSearch);
+  const search = new URLSearchParams(currentSearch);
 
-    Object.keys(updatedSearch).forEach(key => {
-        const value = updatedSearch[key];
+  Object.keys(updatedSearch).forEach((key) => {
+    const value = updatedSearch[key];
 
-        if (value === null) {
-            search.delete(key);
-        } else {
-            search.set(key, value);
-        }
-    });
+    if (value === null) {
+      search.delete(key);
+    } else {
+      search.set(key, value);
+    }
+  });
 
-    return search;
+  return search;
 }

@@ -1,54 +1,51 @@
 import { ApiClient } from "../ApiClient";
 
-
 export class PostApi {
+  static async listPosts(page = 1, options = {}) {
+    let response;
 
-    static async listPosts(page = 1, options = {}) {
+    response = await ApiClient.get("/posts", {
+      params: {
+        page: page,
+        categoryId: options.categoryId || null,
+        tag: options.tag || null,
+      },
+    });
 
-        let response;
+    return response;
+  }
 
-        response = await ApiClient.get("/posts", {
-            params: {
-                page: page,
-                categoryId: options.categoryId || null,
-                tag: options.tag || null,
-            }
-        });
+  static async getPost(slug) {
+    let response;
 
-        return response;
-    }
+    response = await ApiClient.get(`/posts/${slug}`);
 
-    static async getPost(slug) {
-        let response;
+    return response.data;
+  }
 
-        response = await ApiClient.get(`/posts/${slug}`);
+  /**
+   * List post categories.
+   *
+   * @returns {Promise<any>}
+   */
+  static async listPostCategories() {
+    let response;
 
-        return response.data;
-    }
+    response = await ApiClient.get("/postCategories");
 
-    /**
-	 * List post categories.
-	 *
-	 * @returns {Promise<any>}
-	 */
-    static async listPostCategories() {
-        let response;
+    return response.data;
+  }
 
-        response = await ApiClient.get("/postCategories");
+  /**
+   * List post tags.
+   *
+   * @returns {Promise<any>}
+   */
+  static async listPostTags() {
+    let response;
 
-        return response.data;
-    }
+    response = await ApiClient.get("/postTags");
 
-    /**
-	 * List post tags.
-	 *
-	 * @returns {Promise<any>}
-	 */
-    static async listPostTags() {
-        let response;
-
-        response = await ApiClient.get("/postTags");
-
-        return response.data;
-    }
+    return response.data;
+  }
 }
