@@ -24,6 +24,9 @@ jobs:
       - name: Install the dependencies
         run: yarn install
 
+      - name: Run code lint
+        run: yarn lint
+
       - name: Testing
         run: yarn test:nowatch
 
