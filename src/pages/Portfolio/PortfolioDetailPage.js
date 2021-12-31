@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { Portfolios } from "./data";
 import { Heading } from "../../components/Heading/Heading";
 import { Link } from "react-router-dom";
@@ -7,117 +7,114 @@ import { PortfolioCard } from "../../components/Portfolio/PortfolioCard";
 import { SimpleRowData } from "../../components/Rows/SimpleRowData";
 import NotFoundPage from "../Errors/NotFoundPage";
 
-export default class PortfolioDetailPage extends Component {
+export default function PortfolioDetailPage(props) {
 
-	constructor(props) {
-		super(props);
+	const [portfolio, setPortfolio] = useState(null);
 
-		this.state = {
-			portfolio: this.getPortfolioData(this.props.match.params.slug)
-		};
+	useEffect(async () => {
+		await setPortfolio(getPortfolioData(props.match.params.slug));
 
-		// Set up the page title
-		document.title = `Portfolio - ${this.state.portfolio.name}`;
-	}
-
-	getPortfolioData = (slug) => {
-		for (let portfolio of Portfolios) {
-			if (portfolio.slug === slug) {
-				return portfolio;
-			}
+		if (portfolio !== null) {
+			document.title = `Portfolio - ${portfolio.name || 'Not Found'}`;
 		}
+	});
 
-		return null;
-	};
-
-	render() {
-		return (
-			<div>
-				{
-					this.state.portfolio === null ? (
-						<NotFoundPage />
-					) : (
-						<div>
-							<div className="container-body">
-								<div>
-									<Link to="/portfolio">
-										<IoMdArrowRoundBack/> Go back
-									</Link>
-								</div>
-
-								<Heading title={this.state.portfolio.name} align="center"/>
-
-								<div className="flex flex-wrap">
-									<div className="w-full md:w-1/2 flex justify-center portfolios-center">
-										<PortfolioCard name={this.state.portfolio.name}
-													   description={this.state.portfolio.shortDescription}
-													   image={this.state.portfolio.coverImage}/>
-									</div>
-
-									<div className="w-full md:w-1/2">
-										<SimpleRowData label="project">
-											{this.state.portfolio.name}
-										</SimpleRowData>
-
-										<SimpleRowData label="project url">
-											{this.state.portfolio.url === null ? "-" : (
-												<a href={this.state.portfolio.url}>{this.state.portfolio.url}</a>
-											)}
-										</SimpleRowData>
-
-										<SimpleRowData label="description">
-											{this.state.portfolio.longDescription}
-										</SimpleRowData>
-
-										<SimpleRowData label="workplace">
-											{this.state.portfolio.workplace}
-										</SimpleRowData>
-
-										<SimpleRowData label="project role">
-											{this.state.portfolio.projectRole}
-										</SimpleRowData>
-
-										<SimpleRowData label="role description">
-											{this.state.portfolio.roleDescription.map((line, index) => (
-												<div key={index}>{line}</div>
-											))}
-										</SimpleRowData>
-
-										<SimpleRowData label="team members">
-											{this.state.portfolio.members.map((member, index) => (
-												<div key={index}>{member}</div>
-											))}
-										</SimpleRowData>
-									</div>
-								</div>
+	return (
+		<div>
+			{
+				portfolio === null ? (
+					<NotFoundPage />
+				) : (
+					<div>
+						<div className="container-body">
+							<div>
+								<Link to="/portfolio">
+									<IoMdArrowRoundBack/> Go back
+								</Link>
 							</div>
 
-							{
-								// Screenshots section
-								this.state.portfolio.hasScreenshots ? (
-									<div className="w-full bg-black py-10">
-										<div className="container-body">
-											<Heading title="Screenshots" align="center" className="text-white"/>
+							<Heading title={portfolio.name} align="center"/>
 
-											<div className="portfolio-screenshots">
-												{
-													this.state.portfolio.screenshots.map((image, index) => (
-														<img
-															key={index}
-															src={image}
-															alt="screenshot"
-														/>
-													))
-												}
-											</div>
+							<div className="flex flex-wrap">
+								<div className="w-full md:w-1/2 flex justify-center portfolios-center">
+									<PortfolioCard name={portfolio.name}
+												   description={portfolio.shortDescription}
+												   image={portfolio.coverImage}/>
+								</div>
+
+								<div className="w-full md:w-1/2">
+									<SimpleRowData label="project">
+										{portfolio.name}
+									</SimpleRowData>
+
+									<SimpleRowData label="project url">
+										{portfolio.url === null ? "-" : (
+											<a href={portfolio.url}>{portfolio.url}</a>
+										)}
+									</SimpleRowData>
+
+									<SimpleRowData label="description">
+										{portfolio.longDescription}
+									</SimpleRowData>
+
+									<SimpleRowData label="workplace">
+										{portfolio.workplace}
+									</SimpleRowData>
+
+									<SimpleRowData label="project role">
+										{portfolio.projectRole}
+									</SimpleRowData>
+
+									<SimpleRowData label="role description">
+										{portfolio.roleDescription.map((line, index) => (
+											<div key={index}>{line}</div>
+										))}
+									</SimpleRowData>
+
+									<SimpleRowData label="team members">
+										{portfolio.members.map((member, index) => (
+											<div key={index}>{member}</div>
+										))}
+									</SimpleRowData>
+								</div>
+							</div>
+						</div>
+
+						{
+							// Screenshots section
+							portfolio.hasScreenshots ? (
+								<div className="w-full bg-black py-10">
+									<div className="container-body">
+										<Heading title="Screenshots" align="center" className="text-white"/>
+
+										<div className="portfolio-screenshots">
+											{
+												portfolio.screenshots.map((image, index) => (
+													<img
+														key={index}
+														src={image}
+														alt="screenshot"
+													/>
+												))
+											}
 										</div>
 									</div>
-								) : null
-							}
-						</div>
-					)
-				}
-			</div>
-		);
+								</div>
+							) : null
+						}
+					</div>
+				)
+			}
+		</div>
+	);
+}
+
+function getPortfolioData(slug) {
+	for (let portfolio of Portfolios) {
+		if (portfolio.slug === slug) {
+			return portfolio;
+		}
 	}
+
+	return null;
 }
