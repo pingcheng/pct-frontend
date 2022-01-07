@@ -2,13 +2,14 @@
  * Set the theme color meta with a specific color.
  * @param color
  */
-export function setThemeColorMeta(color) {
+export function setThemeColorMeta(color: string) {
   const colorMeta = document.querySelector("meta[name=theme-color]");
   if (colorMeta === null) {
     return;
   }
 
-  colorMeta.content = color;
+  // colorMeta.content = color;
+  colorMeta.setAttribute("content", color);
 }
 
 /**
