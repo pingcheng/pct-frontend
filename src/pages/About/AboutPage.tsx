@@ -13,9 +13,11 @@ import {
 } from "./data";
 import { profile, urls } from "../../data/profile";
 
+export const PAGE_TITLE = "About me";
+
 export default function AboutPage() {
   useEffect(() => {
-    document.title = "About me";
+    document.title = PAGE_TITLE;
   });
 
   return (

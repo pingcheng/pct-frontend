@@ -1,5 +1,33 @@
+import React from "react";
 import each from "jest-each";
-import { calculateWorkingLength, formatDate } from "./AboutPage";
+import AboutPage, {
+  calculateWorkingLength,
+  formatDate,
+  PAGE_TITLE,
+} from "./AboutPage";
+import { render, screen } from "@testing-library/react";
+import { profile, urls } from "../../data/profile";
+
+describe("test <AboutPage>", () => {
+  beforeEach(() => {
+    render(<AboutPage />);
+  });
+
+  it("Should display page title", () => {
+    const titleElement = screen.getByText(PAGE_TITLE);
+    expect(titleElement).toBeInTheDocument();
+  });
+
+  it("should display my email", function () {
+    const emailElement = screen.getByText(profile.email);
+    expect(emailElement).toBeInTheDocument();
+  });
+
+  it("should display my github", function () {
+    const githubUrlElement = screen.getByText(urls.githubUrl);
+    expect(githubUrlElement).toBeInTheDocument();
+  });
+});
 
 describe("formatDate should return correct data", () => {
   each([
