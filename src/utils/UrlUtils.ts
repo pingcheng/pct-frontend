@@ -5,7 +5,10 @@
  * @param updatedSearch
  * @returns {URLSearchParams}
  */
-export function updateSearchQueries(currentSearch, updatedSearch) {
+export function updateSearchQueries(
+  currentSearch: Record<string, string>,
+  updatedSearch: Record<string, string | null>
+): URLSearchParams {
   const search = new URLSearchParams(currentSearch);
 
   Object.keys(updatedSearch).forEach((key) => {
