@@ -1,7 +1,7 @@
 export class Portfolio {
   slug: string;
   name: string;
-  coverImage: string | null;
+  coverImage: string;
   url: string | null;
 
   shortDescription: string;
@@ -17,7 +17,7 @@ export class Portfolio {
   constructor(slug: string, props: PortfolioProps) {
     this.slug = slug;
     this.name = props.name ?? "";
-    this.coverImage = props.coverImage ?? null;
+    this.coverImage = props.coverImage ?? "";
     this.url = props.url ?? null;
 
     this.shortDescription = props.shortDescription ?? "";
