@@ -1,6 +1,30 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 
+type MenuItem = {
+  label: string;
+  path: string;
+};
+
+const menuItems: MenuItem[] = [
+  {
+    label: "Home",
+    path: "/",
+  },
+  {
+    label: "Posts",
+    path: "/posts",
+  },
+  {
+    label: "Portfolio",
+    path: "/portfolio",
+  },
+  {
+    label: "About me",
+    path: "/about",
+  },
+];
+
 export function NavigationMenu(): JSX.Element {
   const [isMobileMenuVisible, setIsMobileMenuVisible] = useState(false);
 
@@ -66,35 +90,17 @@ export function NavigationMenu(): JSX.Element {
 
             <div className="hidden sm:block sm:ml-6">
               <div className="flex space-x-4">
-                <NavLink
-                  to="/"
-                  exact
-                  className="nav-item desktop-nav-item"
-                  activeClassName="active"
-                >
-                  Home
-                </NavLink>
-                <NavLink
-                  to="/posts"
-                  className="nav-item desktop-nav-item"
-                  activeClassName="active"
-                >
-                  Posts
-                </NavLink>
-                <NavLink
-                  to="/portfolio"
-                  className="nav-item desktop-nav-item"
-                  activeClassName="active"
-                >
-                  Portfolio
-                </NavLink>
-                <NavLink
-                  to="/about"
-                  className="nav-item desktop-nav-item"
-                  activeClassName="active"
-                >
-                  About me
-                </NavLink>
+                {menuItems.map((item, index) => (
+                  <NavLink
+                    key={index}
+                    to={item.path}
+                    exact
+                    className="nav-item desktop-nav-item"
+                    activeClassName="active"
+                  >
+                    {item.label}
+                  </NavLink>
+                ))}
               </div>
             </div>
           </div>
@@ -106,35 +112,17 @@ export function NavigationMenu(): JSX.Element {
         role="mobile-nav-menu"
       >
         <div className="px-2 pt-2 pb-3 space-y-1">
-          <NavLink
-            to="/"
-            exact
-            className="nav-item mobile-nav-item"
-            activeClassName="active"
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="/posts"
-            className="nav-item mobile-nav-item"
-            activeClassName="active"
-          >
-            Posts
-          </NavLink>
-          <NavLink
-            to="/portfolio"
-            className="nav-item mobile-nav-item"
-            activeClassName="active"
-          >
-            Portfolio
-          </NavLink>
-          <NavLink
-            to="/about"
-            className="nav-item mobile-nav-item"
-            activeClassName="active"
-          >
-            About me
-          </NavLink>
+          {menuItems.map((item, index) => (
+            <NavLink
+              key={index}
+              to={item.path}
+              exact
+              className="nav-item mobile-nav-item"
+              activeClassName="active"
+            >
+              {item.label}
+            </NavLink>
+          ))}
         </div>
       </div>
     </nav>
