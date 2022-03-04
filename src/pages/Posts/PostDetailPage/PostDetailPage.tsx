@@ -1,13 +1,14 @@
 import { useLocation, useRouteMatch } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { Post } from "types/posts";
 import { PostApi } from "api/PostApi/PostApi";
 import { Heading } from "components/Heading/Heading";
 import { BiTimeFive } from "react-icons/bi";
 import { DateTime } from "luxon";
 import { BsTagFill } from "react-icons/bs";
+import MarkdownText from "components/MarkdownText/MarkdownText";
 import DisqusComments from "components/DisqusComments/DisqusComments";
-import MarkdownText from "../../../components/MarkdownText/MarkdownText";
+import { LOADING_STATUS } from "types/api";
 
 export type UrlParams = {
   slug: string;
@@ -17,9 +18,10 @@ export default function PostDetailPage(): JSX.Element {
   const routeMatch = useRouteMatch<UrlParams>();
   const location = useLocation();
 
+  const [status, setStatus] = useState(LOADING_STATUS.LOADING);
   const [slug, setSlug] = useState<string>();
   const [post, setPost] = useState<Post>();
-  const [loadFailed, setLoadFailed] = useState(false);
+  const [content, setContent] = useState<ReactNode>();
 
   useEffect(() => setSlug(routeMatch.params.slug));
 
@@ -28,48 +30,54 @@ export default function PostDetailPage(): JSX.Element {
       return;
     }
 
-    setLoadFailed(false);
-    document.title = "Loading...";
-
     PostApi.getPost(slug)
       .then((post) => {
         setPost(post);
-        document.title = post.title;
-        console.log(post);
+        setStatus(LOADING_STATUS.LOADED);
       })
       .catch(() => {
-        document.title = "Failed to load post";
-        setLoadFailed(true);
+        setStatus(LOADING_STATUS.FAILED);
       });
   }, [slug]);
 
-  let section = LoadingPlaceholder();
+  useEffect(() => {
+    switch (status) {
+      case LOADING_STATUS.LOADING:
+        document.title = "Loading...";
+        setContent(<LoadingText />);
+        break;
 
-  if (loadFailed) {
-    section = LoadFailedPlaceholder();
-  } else if (post) {
-    section = (
-      <>
-        {PostSection(post)}
-        <DisqusComments
-          url={window.location.origin + location.pathname}
-          identifier={`post/${slug}`}
-          title={post.title}
-        />
-      </>
-    );
-  } else {
-    section = LoadingPlaceholder();
-  }
+      case LOADING_STATUS.FAILED:
+        document.title = "Failed to load post";
+        setContent(<LoadFailedText />);
+        break;
 
-  return <div className="container-body">{section}</div>;
+      case LOADING_STATUS.LOADED:
+        if (post) {
+          document.title = post.title;
+          setContent(
+            <>
+              <PostSection {...post} />
+              <DisqusComments
+                url={window.location.origin + location.pathname}
+                identifier={`post/${slug}`}
+                title={post.title}
+              />
+            </>
+          );
+        }
+        break;
+    }
+  }, [status]);
+
+  return <div className="container-body">{content}</div>;
 }
 
-function LoadingPlaceholder(): JSX.Element {
+function LoadingText(): JSX.Element {
   return <div className="text-center">Loading...</div>;
 }
 
-function LoadFailedPlaceholder(): JSX.Element {
+function LoadFailedText(): JSX.Element {
   return <div className="text-center">Failed to load</div>;
 }
 
