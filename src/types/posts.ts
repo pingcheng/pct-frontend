@@ -4,12 +4,12 @@ export type Post = {
   title: string;
   content: string;
   status: string;
-  category: Category;
+  category: PostCategory;
   tags: string[];
   timeCreated: string;
 };
 
-export type Category = {
+export type PostCategory = {
   id: number;
   name: string;
 };

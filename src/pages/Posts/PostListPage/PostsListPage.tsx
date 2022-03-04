@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { LOADING_STATUS } from "types/api";
-import { Category, Post } from "types/posts";
+import { Post, PostCategory } from "types/posts";
 import { PostApi } from "api/PostApi/PostApi";
 import { Heading } from "components/Heading/Heading";
 import PostsList from "pages/Posts/PostListPage/PostsList/PostsList";
@@ -10,10 +10,10 @@ export default function PostListPage(): JSX.Element {
   const [posts, setPosts] = useState<Post[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentCategory, setCurrentCategory] = useState<Category>();
+  const [currentCategory, setCurrentCategory] = useState<PostCategory>();
 
   const [categoryStatus, setCategoryStatus] = useState<LOADING_STATUS>();
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<PostCategory[]>([]);
 
   const [postsFragment, setPostFragment] = useState<ReactNode>();
   const [categoriesFragment, setCategoriesFragment] = useState<ReactNode>();
