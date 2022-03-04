@@ -1,25 +1,26 @@
 import { ApiClient } from "../ApiClient";
 import { Post } from "types/posts";
+import { ApiResponse, PaginatedApiResponse, PaginatedItems } from "types/api";
 
 export type ListPostsOptions = {
   categoryId?: number;
   tag?: string;
 };
 
-type ApiResponse<T> = {
-  data: T;
-  message: string;
-};
-
 export class PostApi {
-  static async listPosts(page = 1, options: ListPostsOptions = {}) {
-    return await ApiClient.get("/posts", {
-      params: {
-        page: page,
-        categoryId: options.categoryId || null,
-        tag: options.tag || null,
-      },
-    });
+  static async listPosts(
+    page = 1,
+    options: ListPostsOptions = {}
+  ): Promise<PaginatedItems<Post>> {
+    return (
+      await ApiClient.get<PaginatedApiResponse<Post>>("/posts", {
+        params: {
+          page: page,
+          categoryId: options.categoryId || null,
+          tag: options.tag || null,
+        },
+      })
+    ).data.data;
   }
 
   static async getPost(slug: string): Promise<Post> {
