@@ -1,79 +1,44 @@
-import { ReactNode, useEffect, useState } from "react";
-import { LOADING_STATUS } from "types/api";
-import { Post, PostCategory, PostTag } from "types/posts";
-import { PostApi } from "api/PostApi/PostApi";
+import { useEffect, useState } from "react";
+import { PostCategory, PostTag } from "types/posts";
 import { Heading } from "components/Heading/Heading";
-import PostsList from "pages/Posts/PostListPage/PostsList/PostsList";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { integerOrNull } from "utils/NumberUtils";
 import CategoryBlock from "pages/Posts/PostListPage/CategoryBlock/CategoryBlock";
 import TagBlock from "pages/Posts/PostListPage/TagBlock/TagBlock";
+import PostBlock from "pages/Posts/PostListPage/PostBlock/PostBlock";
 
 export default function PostListPage(): JSX.Element {
   const location = useLocation();
+  const history = useHistory();
   const [queryCategoryId, setQueryCategoryId] = useState<number>();
 
-  const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentCategory, setCurrentCategory] = useState<PostCategory>();
   const [currentTag, setCurrentTag] = useState<PostTag>();
-
-  const [postStatus, setPostStatus] = useState<LOADING_STATUS>();
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [postsFragment, setPostFragment] = useState<ReactNode>();
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     setCurrentTag(query.get("tag") ?? undefined);
     setQueryCategoryId(integerOrNull(query.get("categoryId")) ?? undefined);
+    setCurrentPage(integerOrNull(query.get("page")) ?? 1);
   }, []);
 
   useEffect(() => {
-    setPostStatus(LOADING_STATUS.LOADING);
-
-    PostApi.listPosts(currentPage, {
+    console.log(currentPage, currentCategory, currentTag);
+    const queries: Record<string, string | number | undefined> = {
+      page: currentPage,
       categoryId: currentCategory?.id,
       tag: currentTag,
-    })
-      .then((response) => {
-        setPosts(response.items);
-        setTotalPages(response.totalPages);
-        setCurrentPage(response.currentPage);
-        setPostStatus(LOADING_STATUS.LOADED);
-      })
-      .catch(() => {
-        setPostStatus(LOADING_STATUS.FAILED);
-      });
-  }, [currentPage, totalPages, currentCategory, currentTag]);
-
-  useEffect(() => {
-    switch (postStatus) {
-      case LOADING_STATUS.LOADING:
-        setPostFragment(<LoadingText />);
-        break;
-
-      case LOADING_STATUS.FAILED:
-        setPostFragment(<FailedText />);
-        break;
-
-      case LOADING_STATUS.LOADED:
-        setPostFragment(
-          <>
-            <PostsList
-              posts={posts}
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPrevPage={() => setCurrentPage(currentPage - 1)}
-              onNextPage={() => setCurrentPage(currentPage + 1)}
-            />
-          </>
-        );
-        break;
-
-      default:
-        break;
-    }
-  }, [postStatus]);
+    };
+    const search = Object.keys(queries)
+      .filter((key) => queries[key] !== undefined)
+      .map((key) => `${key}=${queries[key]}`)
+      .join("&");
+    history.push({
+      pathname: location.pathname,
+      search: `?${search}`,
+    });
+  }, [currentTag, currentCategory, currentPage]);
 
   return (
     <div className="container-body">
@@ -102,7 +67,14 @@ export default function PostListPage(): JSX.Element {
 
       <div className="flex flex-wrap">
         <div className="w-full md:w-3/4">
-          <div className="w-full pr-4">{postsFragment}</div>
+          <div className="w-full pr-4">
+            <PostBlock
+              page={currentPage}
+              categoryId={currentCategory?.id ?? queryCategoryId ?? undefined}
+              tag={currentTag}
+              onPageChanged={(page) => setCurrentPage(page)}
+            />
+          </div>
         </div>
 
         <div className="w-full md:w-1/4">
@@ -116,14 +88,6 @@ export default function PostListPage(): JSX.Element {
       </div>
     </div>
   );
-}
-
-function LoadingText(): JSX.Element {
-  return <div className="text-center">Loading...</div>;
-}
-
-function FailedText(): JSX.Element {
-  return <div className="text-center">Failed to load</div>;
 }
 
 function Filter({
