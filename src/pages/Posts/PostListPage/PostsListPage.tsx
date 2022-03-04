@@ -4,13 +4,20 @@ import { Post, PostCategory, PostTag } from "types/posts";
 import { PostApi } from "api/PostApi/PostApi";
 import { Heading } from "components/Heading/Heading";
 import PostsList from "pages/Posts/PostListPage/PostsList/PostsList";
+import { useLocation } from "react-router-dom";
+import { integerOrNull } from "utils/NumberUtils";
 
 export default function PostListPage(): JSX.Element {
+  const location = useLocation();
+  const [isReady, setIsReady] = useState(false);
+  const [queryCategoryId, setQueryCategoryId] = useState<number>();
+
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentCategory, setCurrentCategory] = useState<PostCategory>();
   const [currentTag, setCurrentTag] = useState<PostTag>();
 
+  const [shouldLoadPost, setShouldLoadPost] = useState(false);
   const [postStatus, setPostStatus] = useState<LOADING_STATUS>();
   const [posts, setPosts] = useState<Post[]>([]);
   const [postsFragment, setPostFragment] = useState<ReactNode>();
@@ -24,6 +31,17 @@ export default function PostListPage(): JSX.Element {
   const [tagsFragment, setTagsFragment] = useState<ReactNode>();
 
   useEffect(() => {
+    const query = new URLSearchParams(location.search);
+    setCurrentTag(query.get("tag") ?? undefined);
+    setQueryCategoryId(integerOrNull(query.get("categoryId")) ?? undefined);
+    setIsReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (!shouldLoadPost) {
+      return;
+    }
+
     setPostStatus(LOADING_STATUS.LOADING);
 
     PostApi.listPosts(currentPage, {
@@ -39,7 +57,7 @@ export default function PostListPage(): JSX.Element {
       .catch(() => {
         setPostStatus(LOADING_STATUS.FAILED);
       });
-  }, [currentPage, totalPages, currentCategory, currentTag]);
+  }, [shouldLoadPost, currentPage, totalPages, currentCategory, currentTag]);
 
   useEffect(() => {
     switch (postStatus) {
@@ -71,6 +89,10 @@ export default function PostListPage(): JSX.Element {
   }, [postStatus]);
 
   useEffect(() => {
+    if (!isReady) {
+      return;
+    }
+
     setCategoryStatus(LOADING_STATUS.LOADING);
     PostApi.listPostCategories()
       .then((categories) => {
@@ -88,7 +110,7 @@ export default function PostListPage(): JSX.Element {
         setTagsStatus(LOADING_STATUS.LOADED);
       })
       .catch(() => setTagsStatus(LOADING_STATUS.FAILED));
-  }, []);
+  }, [isReady]);
 
   useEffect(() => {
     switch (categoryStatus) {
@@ -118,6 +140,14 @@ export default function PostListPage(): JSX.Element {
             })}
           </>
         );
+
+        if (queryCategoryId) {
+          const category = categories.find(
+            (category) => category.id === queryCategoryId
+          );
+          setCurrentCategory(category);
+          setQueryCategoryId(undefined);
+        }
         break;
       default:
         break;
@@ -155,6 +185,12 @@ export default function PostListPage(): JSX.Element {
         break;
     }
   }, [tagsStatus]);
+
+  useEffect(() => {
+    if (categoryStatus && tagsStatus) {
+      setShouldLoadPost(true);
+    }
+  }, [categoryStatus, tagsStatus]);
 
   return (
     <div className="container-body">
