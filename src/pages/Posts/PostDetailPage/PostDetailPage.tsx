@@ -9,7 +9,7 @@ import { atomOneDarkReasonable } from "react-syntax-highlighter/dist/cjs/styles/
 import { BiTimeFive } from "react-icons/bi";
 import { DateTime } from "luxon";
 import { BsTagFill } from "react-icons/bs";
-import DisqusComments from "../../components/DisqusComments/DisqusComments";
+import DisqusComments from "components/DisqusComments/DisqusComments";
 
 export type UrlParams = {
   slug: string;
@@ -85,8 +85,6 @@ function PostSection(post: Post): JSX.Element {
       );
     },
   };
-
-  console.log("post section", post);
 
   return (
     <div>

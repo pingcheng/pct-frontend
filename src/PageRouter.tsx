@@ -16,7 +16,9 @@ const PortfolioDetailPage = loadable(
 );
 
 const PostsListPage = loadable(() => import("./pages/Posts/PostsListPage"));
-const PostDetailPage = loadable(() => import("./pages/Posts/PostDetailPage"));
+const PostDetailPage = loadable(
+  () => import("./pages/Posts/PostDetailPage/PostDetailPage")
+);
 
 const NotFoundPage = loadable(() => import("./pages/Errors/NotFoundPage"));
 
