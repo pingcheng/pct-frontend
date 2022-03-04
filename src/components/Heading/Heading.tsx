@@ -1,6 +1,8 @@
+import { ReactNode } from "react";
+
 export type HeadingProps = {
   title: string;
-  subTitle?: string;
+  subTitle?: string | ReactNode;
   align?: "left" | "right" | "center";
   className?: string;
 };

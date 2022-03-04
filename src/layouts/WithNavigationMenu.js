@@ -5,7 +5,7 @@ import { setThemeColorMatchNavBar } from "../utils/PageUtils";
 import PropTypes from "prop-types";
 
 export default class WithNavigationMenu extends Component {
-  propTypes = {
+  static propTypes = {
     children: PropTypes.any,
   };
 

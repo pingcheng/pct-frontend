@@ -1,8 +1,14 @@
 import { ApiClient } from "../ApiClient";
+import { Post } from "types/posts";
 
 export type ListPostsOptions = {
   categoryId?: number;
   tag?: string;
+};
+
+type ApiResponse<T> = {
+  data: T;
+  message: string;
 };
 
 export class PostApi {
@@ -16,10 +22,10 @@ export class PostApi {
     });
   }
 
-  static async getPost(slug: string) {
-    const response = await ApiClient.get(`/posts/${slug}`);
+  static async getPost(slug: string): Promise<Post> {
+    const response = await ApiClient.get<ApiResponse<Post>>(`/posts/${slug}`);
 
-    return response.data;
+    return response.data.data;
   }
 
   /**
