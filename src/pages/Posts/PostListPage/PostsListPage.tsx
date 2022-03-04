@@ -118,8 +118,12 @@ export default function PostListPage(): JSX.Element {
           align="center"
           subTitle={
             <>
-              <CategoryFilter
-                category={currentCategory}
+              <Filter
+                text={
+                  currentCategory
+                    ? `Category - ${currentCategory.name}`
+                    : undefined
+                }
                 onRemove={() => setCurrentCategory(undefined)}
               />
             </>
@@ -155,20 +159,20 @@ function Text({ content }: { content: string }): JSX.Element {
   return <div>{content}</div>;
 }
 
-function CategoryFilter({
-  category,
+function Filter({
+  text,
   onRemove,
 }: {
-  category?: Category;
+  text?: string;
   onRemove: () => void;
 }): JSX.Element {
-  if (category) {
+  if (text) {
     return (
       <div
         onClick={() => onRemove()}
         className="inline-block px-2 py-1 rounded-lg bg-gray-100 text-xs hover:text-black cursor-pointer hover:bg-gray-300 smooth mr-2"
       >
-        ✕ Category - {category.name}
+        ✕ {text}
       </div>
     );
   }
