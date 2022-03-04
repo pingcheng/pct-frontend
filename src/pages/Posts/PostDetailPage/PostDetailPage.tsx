@@ -1,15 +1,13 @@
 import { useLocation, useRouteMatch } from "react-router-dom";
-import React, { ElementType, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Post } from "types/posts";
 import { PostApi } from "api/PostApi/PostApi";
 import { Heading } from "components/Heading/Heading";
-import ReactMarkdown from "react-markdown";
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { atomOneDarkReasonable } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import { BiTimeFive } from "react-icons/bi";
 import { DateTime } from "luxon";
 import { BsTagFill } from "react-icons/bs";
 import DisqusComments from "components/DisqusComments/DisqusComments";
+import MarkdownText from "../../../components/MarkdownText/MarkdownText";
 
 export type UrlParams = {
   slug: string;
@@ -76,21 +74,11 @@ function LoadFailedPlaceholder(): JSX.Element {
 }
 
 function PostSection(post: Post): JSX.Element {
-  const renderers: { [nodeType: string]: ElementType } = {
-    code: ({ language, value }) => {
-      return (
-        <SyntaxHighlighter style={atomOneDarkReasonable} language={language}>
-          {value}
-        </SyntaxHighlighter>
-      );
-    },
-  };
-
   return (
     <div>
       <Heading title={post.title} subTitle={PostSubTitle(post)} />
       <div className="post-body">
-        <ReactMarkdown renderers={renderers}>{post.content}</ReactMarkdown>
+        <MarkdownText>{post.content}</MarkdownText>
       </div>
     </div>
   );
