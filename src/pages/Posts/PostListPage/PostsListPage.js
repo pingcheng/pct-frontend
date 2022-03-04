@@ -1,14 +1,14 @@
 import React, { Component } from "react";
-import { PostApi } from "../../api/PostApi/PostApi";
+import { PostApi } from "../../../api/PostApi/PostApi";
 import { Link } from "react-router-dom";
 import { DateTime } from "luxon";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { atomOneDarkReasonable } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import ReactMarkdown from "react-markdown";
-import { Heading } from "../../components/Heading/Heading";
+import { Heading } from "../../../components/Heading/Heading";
 import { BiTimeFive } from "react-icons/bi";
-import { integerOrNull } from "../../utils/NumberUtils";
-import { updateSearchQueries } from "../../utils/UrlUtils";
+import { integerOrNull } from "../../../utils/NumberUtils";
+import { updateSearchQueries } from "../../../utils/UrlUtils";
 import PropTypes from "prop-types";
 
 export default class PostsListPage extends Component {

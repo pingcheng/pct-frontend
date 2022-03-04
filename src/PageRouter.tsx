@@ -15,7 +15,9 @@ const PortfolioDetailPage = loadable(
   () => import("./pages/Portfolio/PortfolioDetailPage")
 );
 
-const PostsListPage = loadable(() => import("./pages/Posts/PostsListPage"));
+const PostsListPage = loadable(
+  () => import("./pages/Posts/PostListPage/PostsListPage")
+);
 const PostDetailPage = loadable(
   () => import("./pages/Posts/PostDetailPage/PostDetailPage")
 );
