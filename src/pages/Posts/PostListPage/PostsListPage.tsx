@@ -6,10 +6,11 @@ import { Heading } from "components/Heading/Heading";
 import PostsList from "pages/Posts/PostListPage/PostsList/PostsList";
 import { useLocation } from "react-router-dom";
 import { integerOrNull } from "utils/NumberUtils";
+import CategoryBlock from "pages/Posts/PostListPage/CategoryBlock/CategoryBlock";
+import TagBlock from "pages/Posts/PostListPage/TagBlock/TagBlock";
 
 export default function PostListPage(): JSX.Element {
   const location = useLocation();
-  const [isReady, setIsReady] = useState(false);
   const [queryCategoryId, setQueryCategoryId] = useState<number>();
 
   const [totalPages, setTotalPages] = useState(1);
@@ -17,31 +18,17 @@ export default function PostListPage(): JSX.Element {
   const [currentCategory, setCurrentCategory] = useState<PostCategory>();
   const [currentTag, setCurrentTag] = useState<PostTag>();
 
-  const [shouldLoadPost, setShouldLoadPost] = useState(false);
   const [postStatus, setPostStatus] = useState<LOADING_STATUS>();
   const [posts, setPosts] = useState<Post[]>([]);
   const [postsFragment, setPostFragment] = useState<ReactNode>();
-
-  const [categoryStatus, setCategoryStatus] = useState<LOADING_STATUS>();
-  const [categories, setCategories] = useState<PostCategory[]>([]);
-  const [categoriesFragment, setCategoriesFragment] = useState<ReactNode>();
-
-  const [tagsStatus, setTagsStatus] = useState<LOADING_STATUS>();
-  const [tags, setTags] = useState<PostTag[]>([]);
-  const [tagsFragment, setTagsFragment] = useState<ReactNode>();
 
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     setCurrentTag(query.get("tag") ?? undefined);
     setQueryCategoryId(integerOrNull(query.get("categoryId")) ?? undefined);
-    setIsReady(true);
   }, []);
 
   useEffect(() => {
-    if (!shouldLoadPost) {
-      return;
-    }
-
     setPostStatus(LOADING_STATUS.LOADING);
 
     PostApi.listPosts(currentPage, {
@@ -57,7 +44,7 @@ export default function PostListPage(): JSX.Element {
       .catch(() => {
         setPostStatus(LOADING_STATUS.FAILED);
       });
-  }, [shouldLoadPost, currentPage, totalPages, currentCategory, currentTag]);
+  }, [currentPage, totalPages, currentCategory, currentTag]);
 
   useEffect(() => {
     switch (postStatus) {
@@ -87,110 +74,6 @@ export default function PostListPage(): JSX.Element {
         break;
     }
   }, [postStatus]);
-
-  useEffect(() => {
-    if (!isReady) {
-      return;
-    }
-
-    setCategoryStatus(LOADING_STATUS.LOADING);
-    PostApi.listPostCategories()
-      .then((categories) => {
-        setCategories(categories);
-        setCategoryStatus(LOADING_STATUS.LOADED);
-      })
-      .catch(() => {
-        setCategoryStatus(LOADING_STATUS.FAILED);
-      });
-
-    setTagsStatus(LOADING_STATUS.LOADING);
-    PostApi.listPostTags()
-      .then((tags) => {
-        setTags(tags);
-        setTagsStatus(LOADING_STATUS.LOADED);
-      })
-      .catch(() => setTagsStatus(LOADING_STATUS.FAILED));
-  }, [isReady]);
-
-  useEffect(() => {
-    switch (categoryStatus) {
-      case LOADING_STATUS.LOADING:
-        setCategoriesFragment(<Text content="Load post categories..." />);
-        break;
-
-      case LOADING_STATUS.FAILED:
-        setCategoriesFragment(
-          <Text content="Failed to load post categories" />
-        );
-        break;
-
-      case LOADING_STATUS.LOADED:
-        setCategoriesFragment(
-          <>
-            {categories.map((category, index) => {
-              return (
-                <div
-                  onClick={() => setCurrentCategory(category)}
-                  key={index}
-                  className="text-gray-500 hover:text-black smooth cursor-pointer"
-                >
-                  {category.name}
-                </div>
-              );
-            })}
-          </>
-        );
-
-        if (queryCategoryId) {
-          const category = categories.find(
-            (category) => category.id === queryCategoryId
-          );
-          setCurrentCategory(category);
-          setQueryCategoryId(undefined);
-        }
-        break;
-      default:
-        break;
-    }
-  }, [categoryStatus]);
-
-  useEffect(() => {
-    switch (tagsStatus) {
-      case LOADING_STATUS.LOADING:
-        setTagsFragment(<Text content="Load post tags..." />);
-        break;
-
-      case LOADING_STATUS.FAILED:
-        setTagsFragment(<Text content="Failed to load post tags" />);
-        break;
-
-      case LOADING_STATUS.LOADED:
-        setTagsFragment(
-          <>
-            {tags.map((tag, index) => {
-              return (
-                <div
-                  onClick={() => setCurrentTag(tag)}
-                  key={index}
-                  className="text-gray-500 hover:text-black smooth cursor-pointer mr-2 inline-block"
-                >
-                  {tag}
-                </div>
-              );
-            })}
-          </>
-        );
-        break;
-      default:
-        break;
-    }
-  }, [tagsStatus]);
-
-  useEffect(() => {
-    if (categoryStatus && tagsStatus) {
-      setShouldLoadPost(true);
-    }
-  }, [categoryStatus, tagsStatus]);
 
   return (
     <div className="container-body">
@@ -223,15 +106,12 @@ export default function PostListPage(): JSX.Element {
         </div>
 
         <div className="w-full md:w-1/4">
-          <div className="bg-gray-100 rounded-md p-4 mb-4">
-            <div className="text-lg mb-4">Category</div>
-            <div className="text-sm">{categoriesFragment}</div>
-          </div>
+          <CategoryBlock
+            onCategorySelected={(category) => setCurrentCategory(category)}
+            defaultCategoryId={queryCategoryId}
+          />
 
-          <div className="bg-gray-100 rounded-md p-4">
-            <div className="text-lg mb-4">Tags</div>
-            <div className="text-sm w-full">{tagsFragment}</div>
-          </div>
+          <TagBlock onTagSelected={(tag) => setCurrentTag(tag)} />
         </div>
       </div>
     </div>
@@ -244,10 +124,6 @@ function LoadingText(): JSX.Element {
 
 function FailedText(): JSX.Element {
   return <div className="text-center">Failed to load</div>;
-}
-
-function Text({ content }: { content: string }): JSX.Element {
-  return <div>{content}</div>;
 }
 
 function Filter({
