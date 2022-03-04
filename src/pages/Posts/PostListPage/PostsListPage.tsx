@@ -6,25 +6,25 @@ import { Heading } from "components/Heading/Heading";
 import PostsList from "pages/Posts/PostListPage/PostsList/PostsList";
 
 export default function PostListPage(): JSX.Element {
-  const [status, setStatus] = useState<LOADING_STATUS>();
-  const [posts, setPosts] = useState<Post[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentCategory, setCurrentCategory] = useState<PostCategory>();
   const [currentTag, setCurrentTag] = useState<PostTag>();
 
+  const [postStatus, setPostStatus] = useState<LOADING_STATUS>();
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [postsFragment, setPostFragment] = useState<ReactNode>();
+
   const [categoryStatus, setCategoryStatus] = useState<LOADING_STATUS>();
   const [categories, setCategories] = useState<PostCategory[]>([]);
+  const [categoriesFragment, setCategoriesFragment] = useState<ReactNode>();
 
   const [tagsStatus, setTagsStatus] = useState<LOADING_STATUS>();
   const [tags, setTags] = useState<PostTag[]>([]);
-
-  const [postsFragment, setPostFragment] = useState<ReactNode>();
-  const [categoriesFragment, setCategoriesFragment] = useState<ReactNode>();
   const [tagsFragment, setTagsFragment] = useState<ReactNode>();
 
   useEffect(() => {
-    setStatus(LOADING_STATUS.LOADING);
+    setPostStatus(LOADING_STATUS.LOADING);
 
     PostApi.listPosts(currentPage, {
       categoryId: currentCategory?.id,
@@ -34,15 +34,15 @@ export default function PostListPage(): JSX.Element {
         setPosts(response.items);
         setTotalPages(response.totalPages);
         setCurrentPage(response.currentPage);
-        setStatus(LOADING_STATUS.LOADED);
+        setPostStatus(LOADING_STATUS.LOADED);
       })
       .catch(() => {
-        setStatus(LOADING_STATUS.FAILED);
+        setPostStatus(LOADING_STATUS.FAILED);
       });
   }, [currentPage, totalPages, currentCategory, currentTag]);
 
   useEffect(() => {
-    switch (status) {
+    switch (postStatus) {
       case LOADING_STATUS.LOADING:
         setPostFragment(<LoadingText />);
         break;
@@ -68,7 +68,7 @@ export default function PostListPage(): JSX.Element {
       default:
         break;
     }
-  }, [status]);
+  }, [postStatus]);
 
   useEffect(() => {
     setCategoryStatus(LOADING_STATUS.LOADING);
