@@ -1,5 +1,5 @@
 import { ApiClient } from "../ApiClient";
-import { Post, PostCategory } from "types/posts";
+import { Post, PostCategory, PostTag } from "types/posts";
 import { ApiResponse, PaginatedApiResponse, PaginatedItems } from "types/api";
 
 export type ListPostsOptions = {
@@ -47,9 +47,9 @@ export class PostApi {
    *
    * @returns {Promise<any>}
    */
-  static async listPostTags() {
-    const response = await ApiClient.get("/postTags");
+  static async listPostTags(): Promise<PostTag[]> {
+    const response = await ApiClient.get<ApiResponse<PostTag[]>>("/postTags");
 
-    return response.data;
+    return response.data.data;
   }
 }

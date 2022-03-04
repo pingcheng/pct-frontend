@@ -5,7 +5,7 @@ export type Post = {
   content: string;
   status: string;
   category: PostCategory;
-  tags: string[];
+  tags: PostTag[];
   timeCreated: string;
 };
 
@@ -13,3 +13,5 @@ export type PostCategory = {
   id: number;
   name: string;
 };
+
+export type PostTag = string;

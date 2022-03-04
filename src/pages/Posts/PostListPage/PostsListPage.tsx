@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { LOADING_STATUS } from "types/api";
-import { Post, PostCategory } from "types/posts";
+import { Post, PostCategory, PostTag } from "types/posts";
 import { PostApi } from "api/PostApi/PostApi";
 import { Heading } from "components/Heading/Heading";
 import PostsList from "pages/Posts/PostListPage/PostsList/PostsList";
@@ -11,18 +11,24 @@ export default function PostListPage(): JSX.Element {
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentCategory, setCurrentCategory] = useState<PostCategory>();
+  const [currentTag, setCurrentTag] = useState<PostTag>();
 
   const [categoryStatus, setCategoryStatus] = useState<LOADING_STATUS>();
   const [categories, setCategories] = useState<PostCategory[]>([]);
 
+  const [tagsStatus, setTagsStatus] = useState<LOADING_STATUS>();
+  const [tags, setTags] = useState<PostTag[]>([]);
+
   const [postsFragment, setPostFragment] = useState<ReactNode>();
   const [categoriesFragment, setCategoriesFragment] = useState<ReactNode>();
+  const [tagsFragment, setTagsFragment] = useState<ReactNode>();
 
   useEffect(() => {
     setStatus(LOADING_STATUS.LOADING);
 
     PostApi.listPosts(currentPage, {
       categoryId: currentCategory?.id,
+      tag: currentTag,
     })
       .then((response) => {
         setPosts(response.items);
@@ -33,7 +39,7 @@ export default function PostListPage(): JSX.Element {
       .catch(() => {
         setStatus(LOADING_STATUS.FAILED);
       });
-  }, [currentPage, totalPages, currentCategory]);
+  }, [currentPage, totalPages, currentCategory, currentTag]);
 
   useEffect(() => {
     switch (status) {
@@ -74,6 +80,14 @@ export default function PostListPage(): JSX.Element {
       .catch(() => {
         setCategoryStatus(LOADING_STATUS.FAILED);
       });
+
+    setTagsStatus(LOADING_STATUS.LOADING);
+    PostApi.listPostTags()
+      .then((tags) => {
+        setTags(tags);
+        setTagsStatus(LOADING_STATUS.LOADED);
+      })
+      .catch(() => setTagsStatus(LOADING_STATUS.FAILED));
   }, []);
 
   useEffect(() => {
@@ -110,6 +124,38 @@ export default function PostListPage(): JSX.Element {
     }
   }, [categoryStatus]);
 
+  useEffect(() => {
+    switch (tagsStatus) {
+      case LOADING_STATUS.LOADING:
+        setTagsFragment(<Text content="Load post tags..." />);
+        break;
+
+      case LOADING_STATUS.FAILED:
+        setTagsFragment(<Text content="Failed to load post tags" />);
+        break;
+
+      case LOADING_STATUS.LOADED:
+        setTagsFragment(
+          <>
+            {tags.map((tag, index) => {
+              return (
+                <div
+                  onClick={() => setCurrentTag(tag)}
+                  key={index}
+                  className="text-gray-500 hover:text-black smooth cursor-pointer mr-2 inline-block"
+                >
+                  {tag}
+                </div>
+              );
+            })}
+          </>
+        );
+        break;
+      default:
+        break;
+    }
+  }, [tagsStatus]);
+
   return (
     <div className="container-body">
       <div>
@@ -126,6 +172,10 @@ export default function PostListPage(): JSX.Element {
                 }
                 onRemove={() => setCurrentCategory(undefined)}
               />
+              <Filter
+                text={currentTag ? `Tag - ${currentTag}` : undefined}
+                onRemove={() => setCurrentTag(undefined)}
+              />
             </>
           }
         />
@@ -140,6 +190,11 @@ export default function PostListPage(): JSX.Element {
           <div className="bg-gray-100 rounded-md p-4 mb-4">
             <div className="text-lg mb-4">Category</div>
             <div className="text-sm">{categoriesFragment}</div>
+          </div>
+
+          <div className="bg-gray-100 rounded-md p-4">
+            <div className="text-lg mb-4">Tags</div>
+            <div className="text-sm w-full">{tagsFragment}</div>
           </div>
         </div>
       </div>
