@@ -9,7 +9,7 @@ import { atomOneDarkReasonable } from "react-syntax-highlighter/dist/cjs/styles/
 import { BiTimeFive } from "react-icons/bi";
 import { DateTime } from "luxon";
 import { BsTagFill } from "react-icons/bs";
-import { DiscussionEmbed } from "disqus-react";
+import DisqusComments from "../../components/DisqusComments/DisqusComments";
 
 export type UrlParams = {
   slug: string;
@@ -53,11 +53,11 @@ export default function PostDetailPage(): JSX.Element {
     section = (
       <>
         {PostSection(post)}
-        {generateDisqusSection(
-          window.location.origin + location.pathname,
-          `post/${slug}`,
-          post.title
-        )}
+        <DisqusComments
+          url={window.location.origin + location.pathname}
+          identifier={`post/${slug}`}
+          title={post.title}
+        />
       </>
     );
   } else {
@@ -108,22 +108,5 @@ function PostSubTitle(post: Post): JSX.Element {
         <BsTagFill /> {post.tags.join(", ")}
       </span>
     </div>
-  );
-}
-
-function generateDisqusSection(
-  url: string,
-  identifier: string,
-  title: string
-): JSX.Element {
-  return (
-    <DiscussionEmbed
-      shortname="pingchengtech"
-      config={{
-        url,
-        identifier,
-        title,
-      }}
-    />
   );
 }
