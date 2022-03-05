@@ -20,12 +20,11 @@ export default function PostBlock({
   const [status, setStatus] = useState<LOADING_STATUS>(LOADING_STATUS.LOADING);
   const [posts, setPosts] = useState<Post[]>([]);
   const [totalPages, setTotalPages] = useState(1);
-  const [currentPage, setCurrentPage] = useState(page);
 
   useEffect(() => {
     setStatus(LOADING_STATUS.LOADING);
 
-    PostApi.listPosts(currentPage, {
+    PostApi.listPosts(page, {
       categoryId,
       tag,
     })
@@ -35,7 +34,7 @@ export default function PostBlock({
         setStatus(LOADING_STATUS.LOADED);
       })
       .catch(() => setStatus(LOADING_STATUS.FAILED));
-  }, [currentPage, categoryId, tag]);
+  }, [page, categoryId, tag]);
 
   const changePage = (targetPage: number): void => {
     if (targetPage < 1) {
@@ -44,7 +43,6 @@ export default function PostBlock({
       targetPage = totalPages;
     }
 
-    setCurrentPage(targetPage);
     onPageChanged(targetPage);
   };
 
@@ -54,10 +52,10 @@ export default function PostBlock({
     [LOADING_STATUS.LOADED]: (
       <PostsList
         posts={posts}
-        currentPage={currentPage}
+        currentPage={page}
         totalPages={totalPages}
-        onPrevPage={() => changePage(currentPage - 1)}
-        onNextPage={() => changePage(currentPage + 1)}
+        onPrevPage={() => changePage(page - 1)}
+        onNextPage={() => changePage(page + 1)}
       />
     ),
   };

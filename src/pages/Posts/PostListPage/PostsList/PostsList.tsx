@@ -19,6 +19,10 @@ export default function PostsList({
   onPrevPage,
   onNextPage,
 }: PostsListProps): JSX.Element {
+  if (posts.length === 0) {
+    return <div>No posts :)</div>;
+  }
+
   return (
     <>
       {posts.map((post, index) => {
