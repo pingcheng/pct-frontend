@@ -25,7 +25,7 @@ export default function PostListPage(): JSX.Element {
 
   useEffect(() => {
     const queries: Record<string, string | number | undefined> = {
-      page: currentPage,
+      page: currentPage === 1 ? undefined : currentPage,
       categoryId: currentCategory?.id,
       tag: currentTag,
     };
@@ -37,7 +37,7 @@ export default function PostListPage(): JSX.Element {
       pathname: location.pathname,
       search: `?${search}`,
     });
-  }, [currentPage]);
+  }, [currentPage, currentCategory, currentTag]);
 
   useEffect(() => {
     setCurrentPage(1);
