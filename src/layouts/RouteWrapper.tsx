@@ -1,12 +1,17 @@
-import React from "react";
 import { Route } from "react-router-dom";
-import PropTypes from "prop-types";
+import React from "react";
+import { RouteProps } from "react-router";
+
+export type RouteWrapperProps = {
+  component: React.ElementType;
+  layout: React.ElementType;
+} & RouteProps;
 
 export function RouteWrapper({
   component: Component,
   layout: Layout,
   ...rest
-}) {
+}: RouteWrapperProps): JSX.Element {
   return (
     <Route
       {...rest}
@@ -18,8 +23,3 @@ export function RouteWrapper({
     />
   );
 }
-
-RouteWrapper.propTypes = {
-  component: PropTypes.any,
-  layout: PropTypes.any,
-};
