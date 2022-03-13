@@ -44,20 +44,18 @@ export const workExperiences: WorkExperience[] = [
 ];
 
 export const backendStack: string[] = [
+  "Node, TypeScript, JavaScript",
+  "Java, ColdFusion",
   "PHP, Laravel, Moodle",
-  "Composer package development",
-  "Message Queue, MVC",
   "MySQL, MSSQL, Redis",
-  "Linux management",
-  "Unit Testing / TDD",
+  "Server management, Message Queue",
   "Payment Integration",
-  "Python, ColdFusion, Java",
 ];
 
 export const frontendStack: string[] = [
   "HTML",
   "JavaScript, Vue, React, jQuery",
-  "CSS, SASS, TailwindCSS, Bootstrap",
+  "CSS, SASS, TailwindCSS, Styled Components, Bootstrap",
   "Webpack",
 ];
 
@@ -66,6 +64,5 @@ export const devOpsStack: string[] = [
   "Infrastructure planning and implementing",
   "Horizontal scaling",
   "Docker, ECS",
-  "Cloud data and files managements",
   "CI/CD, GitlabCI, CircleCI",
 ];
