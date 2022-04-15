@@ -25,12 +25,19 @@ jobs:
         run: npm run lint
 
       - name: Testing
-        run: npm run test:nowatch
+        run: npm run test:nowatch -- --coverage
 
       - name: Build the production files
         run: npm run build
 
-      # publish 
+      # publish coverage
+      - name: Publish artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: pct-frontend-test-coverage
+          path: './coverage'
+
+      # publish
       - name: Publish artifact
         uses: actions/upload-artifact@v2
         with:
