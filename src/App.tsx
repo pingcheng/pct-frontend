@@ -3,7 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import PageRouter from "./PageRouter";
 import "injections/Sentry";
 
-function App() {
+function App(): JSX.Element {
   return (
     <div className="App">
       <BrowserRouter>

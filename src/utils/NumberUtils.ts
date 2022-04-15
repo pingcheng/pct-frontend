@@ -5,7 +5,7 @@
  * @param value
  * @returns {null|number}
  */
-export function integerOrNull(value: string | number | null) {
+export function integerOrNull(value: string | number | null): number | null {
   const valueCopy = String(value);
   const regex = /^-?\d+$/;
 

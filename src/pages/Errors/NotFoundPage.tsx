@@ -2,7 +2,7 @@ import React from "react";
 import { Heading } from "components/Heading/Heading";
 import { RiEmotionSadLine } from "react-icons/ri";
 
-export default function NotFoundPage() {
+export default function NotFoundPage(): JSX.Element {
   return (
     <div className="container-body ">
       <div className="text-center text-gray-400 mb-6">

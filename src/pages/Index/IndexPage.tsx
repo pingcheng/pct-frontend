@@ -3,10 +3,10 @@ import { FiGithub } from "react-icons/fi";
 import { RiArticleLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { FaAsterisk, FaRegSmileWink } from "react-icons/fa";
-import { setThemeColorMeta } from "../../utils/PageUtils";
-import { profile, urls } from "../../data/profile";
+import { setThemeColorMeta } from "utils/PageUtils";
+import { profile, urls } from "data/profile";
 
-export default function IndexPage() {
+export default function IndexPage(): JSX.Element {
   useEffect(() => {
     document.title = profile.name;
     setThemeColorMeta("rgb(255, 255, 255)");

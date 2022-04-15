@@ -24,7 +24,7 @@ const PostDetailPage = loadable(
 
 const NotFoundPage = loadable(() => import("./pages/Errors/NotFoundPage"));
 
-export default function PageRouter() {
+export default function PageRouter(): JSX.Element {
   usePageViews();
   return (
     <Switch>

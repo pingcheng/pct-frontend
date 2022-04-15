@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { Heading } from "../../components/Heading/Heading";
+import { Heading } from "components/Heading/Heading";
 import { Portfolios } from "./data";
 import { Link } from "react-router-dom";
-import { PortfolioCard } from "../../components/Portfolio/PortfolioCard";
+import { PortfolioCard } from "components/Portfolio/PortfolioCard";
 
-export default function PortfolioListPage() {
+export default function PortfolioListPage(): JSX.Element {
   useEffect(() => {
     document.title = "Portfolio";
   });

@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Portfolios } from "./data";
-import { Heading } from "../../components/Heading/Heading";
+import { Heading } from "components/Heading/Heading";
 import { Link } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { PortfolioCard } from "../../components/Portfolio/PortfolioCard";
-import { SimpleRowData } from "../../components/Rows/SimpleRowData";
+import { PortfolioCard } from "components/Portfolio/PortfolioCard";
+import { SimpleRowData } from "components/Rows/SimpleRowData";
 import NotFoundPage from "../Errors/NotFoundPage";
 import PropTypes, { InferProps } from "prop-types";
-import { Portfolio } from "../../models/portfolio/Portfolio";
+import { Portfolio } from "models/portfolio/Portfolio";
 
 export default function PortfolioDetailPage(
   props: InferProps<typeof PortfolioDetailPage.propTypes>
-) {
+): JSX.Element {
   const [portfolio, setPortfolio] = useState<Portfolio | null>(null);
 
   useEffect(() => {

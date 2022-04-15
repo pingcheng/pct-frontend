@@ -2,7 +2,7 @@
  * Set the theme color meta with a specific color.
  * @param color
  */
-export function setThemeColorMeta(color: string) {
+export function setThemeColorMeta(color: string): void {
   const colorMeta = document.querySelector("meta[name=theme-color]");
   if (colorMeta === null) {
     return;
@@ -15,7 +15,7 @@ export function setThemeColorMeta(color: string) {
 /**
  * Set the theme color meta by the background color of the navigation bar.
  */
-export function setThemeColorMatchNavBar() {
+export function setThemeColorMatchNavBar(): void {
   const navBar = document.querySelector("nav");
   if (navBar === null) {
     return;

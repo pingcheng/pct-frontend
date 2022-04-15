@@ -31,7 +31,7 @@ export class Portfolio {
     this.screenshots = props.screenshots ?? [];
   }
 
-  get hasScreenshots() {
+  get hasScreenshots(): boolean {
     return this.screenshots.length > 0;
   }
 }

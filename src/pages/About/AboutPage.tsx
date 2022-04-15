@@ -11,11 +11,11 @@ import {
   WorkExperience,
   workExperiences,
 } from "./data";
-import { profile, urls } from "../../data/profile";
+import { profile, urls } from "data/profile";
 
 export const PAGE_TITLE = "About me";
 
-export default function AboutPage() {
+export default function AboutPage(): JSX.Element {
   useEffect(() => {
     document.title = PAGE_TITLE;
   });
@@ -131,7 +131,7 @@ function renderWorkExperience(experiences: WorkExperience[] = []) {
   });
 }
 
-export function formatDate(date: Date) {
+export function formatDate(date: Date): string {
   const month = [
     "Jan",
     "Feb",
@@ -150,7 +150,7 @@ export function formatDate(date: Date) {
   return `${month[date.getMonth()]} ${date.getFullYear()}`;
 }
 
-export function calculateWorkingLength(startDate: Date, endDate: Date) {
+export function calculateWorkingLength(startDate: Date, endDate: Date): string {
   const startedMonth = startDate.getFullYear() * 12 + startDate.getMonth();
   const endedMonth = endDate.getFullYear() * 12 + endDate.getMonth();
   const monthDiff = endedMonth - startedMonth;
