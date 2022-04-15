@@ -6,7 +6,7 @@ import AboutPage, {
   PAGE_TITLE,
 } from "./AboutPage";
 import { render, screen } from "@testing-library/react";
-import { profile, urls } from "../../data/profile";
+import { profile, urls } from "data/profile";
 
 describe("test <AboutPage>", () => {
   beforeEach(() => {
