@@ -18,20 +18,17 @@ jobs:
         with:
           node-version: 12
 
-      - name: Install yarn
-        run: npm install -g yarn
-
       - name: Install the dependencies
-        run: yarn install
+        run: npm install
 
       - name: Run code lint
-        run: yarn lint
+        run: npm run lint
 
       - name: Testing
-        run: yarn test:nowatch
+        run: npm run test:nowatch
 
       - name: Build the production files
-        run: yarn build
+        run: npm run build
 
       # publish 
       - name: Publish artifact
