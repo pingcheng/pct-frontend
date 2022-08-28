@@ -8,10 +8,17 @@ export type WorkExperience = {
 
 export const workExperiences: WorkExperience[] = [
   {
-    company: "REA Group",
+    company: "REA Group - PropTrack",
+    position: "Senior Developer",
+    startDate: new Date(2022, 6),
+    endDate: null,
+    description: [],
+  },
+  {
+    company: "REA Group - PropTrack",
     position: "Developer",
     startDate: new Date(2021, 8),
-    endDate: null,
+    endDate: new Date(2022, 5),
     description: [],
   },
   {
