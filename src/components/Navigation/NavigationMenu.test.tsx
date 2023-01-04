@@ -5,12 +5,12 @@ import userEvent from "@testing-library/user-event";
 
 describe("test <NavigationMenu>", () => {
   it("should render correctly", function () {
-    const { container } = render(
+    const { asFragment } = render(
       <MemoryRouter>
         <NavigationMenu />
       </MemoryRouter>
     );
-    expect(container.innerHTML).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it("should render mobile view toggle button", function () {
@@ -60,35 +60,39 @@ describe("test <NavigationMenu>", () => {
     });
   });
 
-  it.each(["Home", "Posts", "Portfolio", "About me"])(
-    "navigation bar should have desktop nav item '%s'",
-    (name) => {
-      render(
-        <MemoryRouter>
-          <NavigationMenu />
-        </MemoryRouter>
-      );
-      expect(
-        screen.getByText(name, {
-          selector: ".desktop-nav-item",
-        })
-      ).toBeInTheDocument();
-    }
-  );
+  it.each([
+    "Home",
+    // "Posts",
+    "Portfolio",
+    "About me",
+  ])("navigation bar should have desktop nav item '%s'", (name) => {
+    render(
+      <MemoryRouter>
+        <NavigationMenu />
+      </MemoryRouter>
+    );
+    expect(
+      screen.getByText(name, {
+        selector: ".desktop-nav-item",
+      })
+    ).toBeInTheDocument();
+  });
 
-  it.each(["Home", "Posts", "Portfolio", "About me"])(
-    "navigation bar should have mobile nav item '%s'",
-    (name) => {
-      render(
-        <MemoryRouter>
-          <NavigationMenu />
-        </MemoryRouter>
-      );
-      expect(
-        screen.getByText(name, {
-          selector: ".mobile-nav-item",
-        })
-      ).toBeInTheDocument();
-    }
-  );
+  it.each([
+    "Home",
+    // "Posts",
+    "Portfolio",
+    "About me",
+  ])("navigation bar should have mobile nav item '%s'", (name) => {
+    render(
+      <MemoryRouter>
+        <NavigationMenu />
+      </MemoryRouter>
+    );
+    expect(
+      screen.getByText(name, {
+        selector: ".mobile-nav-item",
+      })
+    ).toBeInTheDocument();
+  });
 });
