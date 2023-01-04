@@ -11,10 +11,10 @@ const menuItems: MenuItem[] = [
     label: "Home",
     path: "/",
   },
-  {
-    label: "Posts",
-    path: "/posts",
-  },
+  // {
+  //   label: "Posts",
+  //   path: "/posts",
+  // },
   {
     label: "Portfolio",
     path: "/portfolio",

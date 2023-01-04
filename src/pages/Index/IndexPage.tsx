@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { FiGithub } from "react-icons/fi";
-import { RiArticleLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { FaAsterisk, FaRegSmileWink } from "react-icons/fa";
 import { setThemeColorMeta } from "utils/PageUtils";
@@ -52,9 +51,9 @@ export default function IndexPage(): JSX.Element {
         <a className="social-link mr-4 p-2" href={urls.githubUrl}>
           <FiGithub /> Github
         </a>
-        <NavLink to="/posts" className="social-link mr-4 p-2">
-          <RiArticleLine /> Posts
-        </NavLink>
+        {/*<NavLink to="/posts" className="social-link mr-4 p-2">*/}
+        {/*  <RiArticleLine /> Posts*/}
+        {/*</NavLink>*/}
         <NavLink to="/portfolio" className="social-link mr-4 p-2">
           <FaAsterisk /> Portfolio
         </NavLink>
