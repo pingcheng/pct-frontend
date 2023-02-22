@@ -2,7 +2,7 @@ import { Route, Switch } from "react-router-dom";
 import { RouteWrapper } from "./layouts/RouteWrapper";
 import WithNavigationMenu from "./layouts/WithNavigationMenu";
 import React from "react";
-import loadable from "loadable-components";
+import loadable from "@loadable/component";
 import usePageViews from "injections/GoogleAnalytics";
 
 const IndexPage = loadable(() => import("./pages/Index/IndexPage"));
