@@ -32,7 +32,7 @@ jobs:
 
       # publish coverage
       - name: Publish artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: pct-frontend-test-coverage
           path: './coverage'
@@ -56,7 +56,7 @@ jobs:
           aws-region: ap-southeast-2
 
       - name: Download artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: pct-frontend-build
           path: './build'
