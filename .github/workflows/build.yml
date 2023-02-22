@@ -13,8 +13,8 @@ jobs:
       REACT_APP_GOOGLE_ANALYTICS_ID: ${{ secrets.REACT_APP_GOOGLE_ANALYTICS_ID }}
       REACT_APP_SENTRY_DSN: ${{ secrets.REACT_APP_SENTRY_DSN }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16
 
@@ -39,7 +39,7 @@ jobs:
 
       # publish
       - name: Publish artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: pct-frontend-build
           path: './build'
