@@ -33,11 +33,11 @@ export default function CategoryBlock({
     <div className="bg-gray-100 rounded-md p-4 mb-4">
       <div className="text-lg mb-4">Category</div>
       <div className="text-sm">
-        {categories.map((category, index) => {
+        {categories.map((category) => {
           return (
             <div
               onClick={() => onCategorySelected(category)}
-              key={index}
+              key={category.id}
               className="text-gray-500 hover:text-black smooth cursor-pointer"
             >
               {category.name}
