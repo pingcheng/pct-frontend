@@ -90,9 +90,9 @@ export function NavigationMenu(): JSX.Element {
 
             <div className="hidden sm:block sm:ml-6">
               <div className="flex space-x-4">
-                {menuItems.map((item, index) => (
+                {menuItems.map((item) => (
                   <NavLink
-                    key={index}
+                    key={item.path}
                     to={item.path}
                     exact
                     className="nav-item desktop-nav-item"
@@ -112,9 +112,9 @@ export function NavigationMenu(): JSX.Element {
         role="mobile-nav-menu"
       >
         <div className="px-2 pt-2 pb-3 space-y-1">
-          {menuItems.map((item, index) => (
+          {menuItems.map((item) => (
             <NavLink
-              key={index}
+              key={item.path}
               to={item.path}
               exact
               className="nav-item mobile-nav-item"

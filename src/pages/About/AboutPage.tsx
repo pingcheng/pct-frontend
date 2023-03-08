@@ -110,13 +110,16 @@ export default function AboutPage(): JSX.Element {
 }
 
 function renderWorkExperience(experiences: WorkExperience[] = []) {
-  return experiences.map((experience, index) => {
+  return experiences.map((experience) => {
     const endDate = experience.endDate ?? new Date();
     const endDateString =
       experience.endDate === null ? "Present" : formatDate(endDate);
+    const keyName = `${experience.company}/${
+      experience.position
+    }/${experience.startDate.toISOString()}`;
 
     return (
-      <div className="mb-2" key={index}>
+      <div className="mb-2" key={keyName}>
         <div>{experience.company}</div>
         <div className="text-gray-400 text-xs">
           <span className="text-black">{experience.position}</span> /{" "}
