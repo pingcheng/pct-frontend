@@ -8,7 +8,6 @@ export function setThemeColorMeta(color: string): void {
     return;
   }
 
-  // colorMeta.content = color;
   colorMeta.setAttribute("content", color);
 }
 

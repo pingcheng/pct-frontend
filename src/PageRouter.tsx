@@ -15,13 +15,6 @@ const PortfolioDetailPage = loadable(
   () => import("./pages/Portfolio/PortfolioDetailPage")
 );
 
-// const PostsListPage = loadable(
-//   () => import("./pages/Posts/PostListPage/PostsListPage")
-// );
-// const PostDetailPage = loadable(
-//   () => import("./pages/Posts/PostDetailPage/PostDetailPage")
-// );
-
 const NotFoundPage = loadable(() => import("./pages/Errors/NotFoundPage"));
 
 export default function PageRouter(): JSX.Element {
@@ -47,24 +40,6 @@ export default function PageRouter(): JSX.Element {
         component={PortfolioDetailPage}
         layout={WithNavigationMenu}
       />
-
-      {/* hide the posts for now */}
-      {/*<RouteWrapper*/}
-      {/*  exact*/}
-      {/*  path="/posts"*/}
-      {/*  component={PostsListPage}*/}
-      {/*  layout={WithNavigationMenu}*/}
-      {/*/>*/}
-      {/*<RouteWrapper*/}
-      {/*  path="/posts/:slug"*/}
-      {/*  component={PostDetailPage}*/}
-      {/*  layout={WithNavigationMenu}*/}
-      {/*/>*/}
-      {/*<RouteWrapper*/}
-      {/*  path="/post/:slug"*/}
-      {/*  component={PostDetailPage}*/}
-      {/*  layout={WithNavigationMenu}*/}
-      {/*/>*/}
 
       <RouteWrapper component={NotFoundPage} layout={WithNavigationMenu} />
     </Switch>

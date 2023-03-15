@@ -70,14 +70,14 @@ export default function PortfolioDetailPage(
                 </SimpleRowData>
 
                 <SimpleRowData label="role description">
-                  {portfolio.roleDescription.map((line, index) => (
-                    <div key={index}>{line}</div>
+                  {portfolio.roleDescription.map((line) => (
+                    <div key={line}>{line}</div>
                   ))}
                 </SimpleRowData>
 
                 <SimpleRowData label="team members">
-                  {portfolio.members.map((member, index) => (
-                    <div key={index}>{member}</div>
+                  {portfolio.members.map((member) => (
+                    <div key={member}>{member}</div>
                   ))}
                 </SimpleRowData>
               </div>
@@ -96,8 +96,8 @@ export default function PortfolioDetailPage(
                   />
 
                   <div className="portfolio-screenshots">
-                    {portfolio.screenshots.map((image, index) => (
-                      <img key={index} src={image} alt="screenshot" />
+                    {portfolio.screenshots.map((image) => (
+                      <img key={image} src={image} alt="screenshot" />
                     ))}
                   </div>
                 </div>
