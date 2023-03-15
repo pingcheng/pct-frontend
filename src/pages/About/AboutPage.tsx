@@ -11,7 +11,7 @@ import {
   WorkExperience,
   workExperiences,
 } from "./data";
-import { profile, urls } from "data/profile";
+import { profile, urls } from "@config/profile";
 
 export const PAGE_TITLE = "About me";
 

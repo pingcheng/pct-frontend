@@ -1,4 +1,4 @@
-import { Portfolio } from "../../models/portfolio/Portfolio";
+import { Portfolio } from "../src/models/portfolio/Portfolio";
 
 export const Portfolios = [
   new Portfolio("empire-cbs", {

@@ -3,7 +3,7 @@ import { FiGithub } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
 import { FaAsterisk, FaRegSmileWink } from "react-icons/fa";
 import { setThemeColorMeta } from "utils/PageUtils";
-import { profile, urls } from "data/profile";
+import { profile, urls } from "@config/profile";
 
 export default function IndexPage(): JSX.Element {
   useEffect(() => {
