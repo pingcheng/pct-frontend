@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Portfolios } from "@config/portfolio";
+import { Portfolios } from "../../config/portfolio";
 import { Heading } from "components/Heading/Heading";
 import { Link } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";

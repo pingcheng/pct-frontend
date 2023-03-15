@@ -2,7 +2,7 @@ import { ReactNode, useEffect } from "react";
 import { NavigationMenu } from "components/Navigation/NavigationMenu";
 import { HiHeart } from "react-icons/hi";
 import { setThemeColorMatchNavBar } from "utils/PageUtils";
-import { profile } from "@config/profile";
+import { profile } from "../config/profile";
 
 export type WithNavigationMenuProps = {
   children: ReactNode;

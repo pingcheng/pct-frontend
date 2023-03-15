@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Heading } from "components/Heading/Heading";
-import { Portfolios } from "@config/portfolio";
+import { Portfolios } from "../../config/portfolio";
 import { Link } from "react-router-dom";
 import { PortfolioCard } from "components/Portfolio/PortfolioCard";
 
