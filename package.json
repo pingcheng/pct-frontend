@@ -14,12 +14,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-ga": "^3.3.0",
-    "react-icons": "^4.2.0",
-    "react-markdown": "^5.0.3",
+    "react-icons": "^4.10.1",
     "react-router-dom": "^5.3.1",
-    "react-scripts": "5.0.1",
-    "react-syntax-highlighter": "^15.4.3",
-    "sass": "^1.50.1",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -52,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "sass": "^1.50.1",
     "prettier": "^2.5.1",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@types/loadable__component": "^5.13.4",
