@@ -3,7 +3,6 @@ import { RouteWrapper } from "layouts/RouteWrapper";
 import WithNavigationMenu from "./layouts/WithNavigationMenu";
 import React from "react";
 import loadable from "@loadable/component";
-import "injections/GoogleAnalytics";
 
 const IndexPage = loadable(() => import("./pages/Index/IndexPage"));
 const AboutPage = loadable(() => import("./pages/About/AboutPage"));
