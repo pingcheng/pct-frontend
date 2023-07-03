@@ -1,9 +1,9 @@
 import { Route, Switch } from "react-router-dom";
-import { RouteWrapper } from "./layouts/RouteWrapper";
+import { RouteWrapper } from "layouts/RouteWrapper";
 import WithNavigationMenu from "./layouts/WithNavigationMenu";
 import React from "react";
 import loadable from "@loadable/component";
-import usePageViews from "injections/GoogleAnalytics";
+import "injections/GoogleAnalytics";
 
 const IndexPage = loadable(() => import("./pages/Index/IndexPage"));
 const AboutPage = loadable(() => import("./pages/About/AboutPage"));
@@ -18,7 +18,6 @@ const PortfolioDetailPage = loadable(
 const NotFoundPage = loadable(() => import("./pages/Errors/NotFoundPage"));
 
 export default function PageRouter(): JSX.Element {
-  usePageViews();
   return (
     <Switch>
       <Route exact path="/" component={IndexPage} />
