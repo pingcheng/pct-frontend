@@ -12,7 +12,15 @@ export const workExperiences: WorkExperience[] = [
     position: "Senior Developer",
     startDate: new Date(2022, 6),
     endDate: null,
-    description: [],
+    description: [
+      "Highly involved in digital mortgage areas, seamlessly connecting banks and the valuation industry with modern digital solutions. Contributing to the development of secure, enterprise-level products.",
+      ":line-break:",
+      "Key Responsibilities:",
+      "- Collaborate closely with the lead developer to design system solutions.",
+      "- Utilise existing group-wide infrastructure to optimise efficiency and avoid redundancy.",
+      "- Take the lead in developing feature slices and efficiently allocate work within the team.",
+      "- Provide mentorship to less experienced developers within the team.",
+    ],
   },
   {
     company: "REA Group - PropTrack",
@@ -67,9 +75,9 @@ export const frontendStack: string[] = [
 ];
 
 export const devOpsStack: string[] = [
-  "AWS, Aliyun",
+  "AWS",
   "Infrastructure planning and implementing",
   "Horizontal scaling",
-  "Docker, ECS",
+  "Serverless, Docker, ECS",
   "CI/CD, GitlabCI, CircleCI",
 ];

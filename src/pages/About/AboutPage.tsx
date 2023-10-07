@@ -125,9 +125,13 @@ function renderWorkExperience(experiences: WorkExperience[] = []) {
           <span className="text-black">{experience.position}</span> /{" "}
           {formatDate(experience.startDate)} - {endDateString} (
           {calculateWorkingLength(experience.startDate, endDate)})<br />
-          {experience.description.map((text) => (
-            <p key={text}>{text}</p>
-          ))}
+          {experience.description.map((text) => {
+            if (text === ":line-break:") {
+              return <br key={text} />;
+            }
+
+            return <p key={text}>{text}</p>;
+          })}
         </div>
       </div>
     );
